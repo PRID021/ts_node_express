@@ -8,10 +8,7 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
     const endPoint = `${req.method} ${chalk.green(req.originalUrl)}`;
     const reqHeaderInfo = `${chalk.yellow('Headers: ')} ${chalk.white(JSON.stringify(req.headers, null, 2))}`
 
-
-
     let message = `[${timestamp}] \n ${endPoint} \n ${reqHeaderInfo}`
-
     if (Object.keys(req.query).length > 0) {
         const queryParams = `${chalk.magenta('Query Params: ')} ${chalk.white(JSON.stringify(req.query, null, 2))}`
         message = `${message} \n ${queryParams}`
@@ -24,13 +21,9 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
         const duration = Date.now() - start;
         const statusMessage = `${chalk.blue(`${req.method} ${chalk.green(req.originalUrl)} `)} ` +
             chalk.yellow(`Status: ${res.statusCode} Duration: ${duration}ms`);
-        message = `${message} \n ${statusMessage}`
+        message = `${message} \n ${statusMessage} \n ----------------------------------------`
         console.log(message)
-        logger.info(message)
+        logger.info(`${message}`)
     });
-
-
-
-
     next();
 };
