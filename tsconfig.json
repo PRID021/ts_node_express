@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES6", // Target ECMAScript 6 or later
-    "module": "ES6", // Use ES6 module system (for import/export)
+    "module": "ESNext", // Use ES6 module system (for import/export)
     "moduleResolution": "node", // Resolve modules in a Node.js-like manner
     "outDir": "./dist", // Output directory for compiled JS files
     "rootDir": "./src", // Input directory for TS files
@@ -17,7 +17,9 @@
       "@routers/*": ["src/routers/*"],
       "@services/*": ["src/services/*"],
       "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@settings/*": ["src/settings/*"],
+      "@errors/*": ["src/errors/*"],
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },

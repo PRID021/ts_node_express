@@ -23,7 +23,7 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
             chalk.yellow(`Status: ${res.statusCode} Duration: ${duration}ms`);
         message = `${message} \n ${statusMessage} \n ----------------------------------------`
         console.log(message)
-        logger.info(`${message}`)
+        // logger.info(`${message}`)
     });
     next();
 };
