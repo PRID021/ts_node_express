@@ -1,5 +1,5 @@
 import express from 'express';
-import { logger } from '@utils/logger';
+import { loggerMiddleware } from '@middlewares/loggerMiddleware';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Apply the logger middleware to all incoming requests
-app.use(logger);
+app.use(loggerMiddleware);
 
 // Example route
 app.get('/', (req, res) => {

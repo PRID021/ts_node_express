@@ -4,15 +4,17 @@
   "main": "src/index.js",
   "license": "MIT",
   "type": "module",
-"scripts": {
-  "build":  "tsc && tsc-alias",
-  "start": "node -r dotenv/config ./dist/app.js",
-  "dev": "tsx -r dotenv/config  --watch src/app.ts"
-},
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "start": "node -r dotenv/config ./dist/app.js",
+    "dev": "tsx -r dotenv/config  --watch src/app.ts"
+  },
   "dependencies": {
     "chalk": "^5.3.0",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
