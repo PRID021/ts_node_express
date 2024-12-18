@@ -13,6 +13,7 @@ const app = express();
 
 // Create Tables 
 syncDatabase();
+
 // Middleware 
 app.use(express.json());
 app.use(loggerMiddleware);
