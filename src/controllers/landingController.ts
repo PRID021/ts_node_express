@@ -15,7 +15,7 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
     const posts = await Post.findAll();
     create200Response<Post[]>({
       res: res,
-      message: "Get posts succesffuly",
+      message: "Get posts successful",
       data: posts,
     });
   } catch (error) {

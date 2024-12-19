@@ -66,6 +66,16 @@ export const createTables = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      shortDescription: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
+      imgUrl: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        defaultValue:"",
+      },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,

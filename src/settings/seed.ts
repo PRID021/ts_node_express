@@ -26,7 +26,7 @@ export const seedDatabase = async (sequelize: Sequelize) => {
       {
         name: "hoang.pham",
         email: "hoangduc.uit.dev@gmail.com",
-        password: await User.hashPassword("Passsword123@@"),
+        password: await User.hashPassword("Password123@@"),
       },
       {
         name: "Jane Smith",
@@ -43,11 +43,15 @@ export const seedDatabase = async (sequelize: Sequelize) => {
         authorId: users[0].id,
         title: "First Post by hoang.pham",
         content: await loadMarkdownContent("hoang_1.md"),
+        imgUrl: "https://picsum.photos/200/300",
+        shortDescription: "Eu pariatur qui ut esse irure."
       },
       {
         authorId: users[1].id,
         title: "First Post by Jane",
         content: await loadMarkdownContent("jane_1.md"),
+        imgUrl: "https://picsum.photos/200/300",
+        shortDescription: "Eu pariatur qui ut esse irure."
       },
     ]);
 

@@ -5,4 +5,6 @@ export class Post extends Model {
   public authorId!: number;
   public title!: string;
   public content!: string;
+  public shortDescription!: string;
+  public imgUrl!: string;
 }
