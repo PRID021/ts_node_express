@@ -1,9 +1,9 @@
 import express from "express";
 
-import { greeting } from "@controllers/landingController";
+import { getPosts } from "@controllers/landingController";
 
 const router = express.Router();
 
-router.get("/", greeting);
+router.get("/", getPosts);
 
 export default router;

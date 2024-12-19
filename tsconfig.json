@@ -20,7 +20,7 @@
       "@utils/*": ["src/utils/*"],
       "@settings/*": ["src/settings/*"],
       "@errors/*": ["src/errors/*"],
-      
+      "@posts/*": ["/posts"]
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
@@ -29,6 +29,6 @@
     "verbose": false
   },
   "outDir": "./dist",
-  "include": ["src/**/*.ts"], // Include all .ts files in the src folder
+  "include": ["src/**/*.ts", "posts/**/*.md"], // Include all .ts files in the src folder
   "exclude": ["node_modules"] // Exclude node_modules folder
 }

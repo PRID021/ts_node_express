@@ -2,6 +2,19 @@ import { Post } from "@models/post";
 import User from "@models/user";
 import { Sequelize } from "sequelize";
 
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Helper function to load content from a markdown file
+const loadMarkdownContent = async (filename: string): Promise<string> => {
+  const filePath = path.join(__dirname, "../../posts", filename); // Adjust the path to match your project structure
+  return await fs.readFile(filePath, "utf-8");
+};
+
 export const seedDatabase = async (sequelize: Sequelize) => {
   try {
     // Sync database to ensure tables are created
@@ -24,17 +37,17 @@ export const seedDatabase = async (sequelize: Sequelize) => {
 
     console.log("Mock users created!");
 
-    // Insert mock posts
+    // Insert mock posts with markdown content
     const posts = await Post.bulkCreate([
       {
         authorId: users[0].id,
         title: "First Post by hoang.pham",
-        content: "This is the content of hoang's first post.",
+        content: await loadMarkdownContent("hoang_1.md"),
       },
       {
         authorId: users[1].id,
         title: "First Post by Jane",
-        content: "This is the content of Jane's first post.",
+        content: await loadMarkdownContent("jane_1.md"),
       },
     ]);
 
