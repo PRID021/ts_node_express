@@ -1,5 +1,6 @@
 import { Model } from "sequelize";
 
+
 export class Post extends Model {
   public id!: number;
   public authorId!: number;

@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize } from "sequelize";
+import { Media } from "./media";
 import { Post } from "./post";
 import RefreshToken from "./refreshToken";
 import User from "./user";
@@ -73,8 +74,8 @@ export const createTables = (sequelize: Sequelize) => {
       },
       imgUrl: {
         type: DataTypes.STRING,
-        allowNull:false,
-        defaultValue:"",
+        allowNull: false,
+        defaultValue: "",
       },
       content: {
         type: DataTypes.TEXT,
@@ -116,4 +117,54 @@ export const createTables = (sequelize: Sequelize) => {
       underscored: true,
     }
   );
+
+  Media.init(
+    {
+      id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+
+      postId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: Post,
+          key: "id",
+        },
+      },
+      description: {
+        type: DataTypes.STRING(1000),
+        allowNull: false,
+      },
+      source: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      thumb: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      contentType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    { sequelize, modelName: "Media", tableName: "medias", timestamps: true }
+  );
+
+  Post.hasMany(Media, {
+    foreignKey: "postId",
+    as: "media",
+  });
+
+  Media.belongsTo(Post, {
+    foreignKey: "postId",
+    as: "post",
+  });
 };
