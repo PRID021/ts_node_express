@@ -5,19 +5,21 @@ import {
   ApiResponse,
   common200001Reponse,
   commonBadResponse,
+  missTokenResponse,
   unhandledErrorResponse,
 } from "@res/commons";
-import { createUserToken, refreshUserToken } from "@services/tokenService";
+import {
+  createUserToken,
+  invalidateToken,
+  updateUserToken,
+} from "@services/tokenService";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
 /**
  * Authenticate a user and generate access and refresh tokens.
  */
-export const authenticateUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const signIn = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
   let errorResponse: ApiResponse;
   if (!email || !password) {
@@ -60,34 +62,7 @@ export const authenticateUser = async (
   }
 };
 
-/**
- * Refresh access token using the refresh token.
- */
-export const refreshAccessToken = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { userId, refreshToken } = req.body;
-  if (!refreshToken) {
-    let missTokenResponse: ApiResponse = {
-      statusCode: appErrorCodes.unauthorized.token.requireRefresh,
-      message: appErrorMessages.unauthorized.token.requireRefresh,
-    };
-    res.status(401).json(missTokenResponse);
-    return;
-  }
-  try {
-    const newUserToken = await refreshUserToken(userId, refreshToken);
-    res.status(200).json(common200001Reponse<UserToken>(newUserToken));
-  } catch (err) {
-    res.status(999).json(unhandledErrorResponse);
-  }
-};
-
-export const createUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const signUp = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     res.status(500).json(commonBadResponse);
@@ -103,6 +78,38 @@ export const createUser = async (
     res.status(200).json(common200001Reponse<User>(newUser));
     return;
   } catch (err) {
+    res.status(999).json(unhandledErrorResponse);
+  }
+};
+
+/**
+ * Refresh access token using the refresh token.
+ */
+export const refresh = async (req: Request, res: Response): Promise<void> => {
+  const { userId, refreshToken } = req.body;
+  if (!refreshToken) {
+    res.status(401).json(missTokenResponse);
+    return;
+  }
+  try {
+    const newUserToken = await updateUserToken(userId, refreshToken);
+    res.status(200).json(common200001Reponse<UserToken>(newUserToken));
+  } catch (err) {
+    res.status(999).json(unhandledErrorResponse);
+  }
+};
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  const { userId, refreshToken } = req.body;
+  if (!refreshToken) {
+    res.status(401).json(missTokenResponse);
+    return;
+  }
+  try {
+    await invalidateToken(userId, refreshToken);
+    res.status(200).json(common200001Reponse());
+    return;
+  } catch (error) {
     res.status(999).json(unhandledErrorResponse);
   }
 };

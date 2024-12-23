@@ -30,3 +30,9 @@ export const commonBadResponse: ApiResponse = {
   statusCode: appErrorCodes.badRequest.common,
   message: appErrorMessages.badRequest.common,
 };
+
+
+export const missTokenResponse: ApiResponse = {
+  statusCode: appErrorCodes.unauthorized.token.requireRefresh,
+  message: appErrorMessages.unauthorized.token.requireRefresh,
+};

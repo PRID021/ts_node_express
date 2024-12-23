@@ -49,7 +49,35 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
   }
 };
 
-export const refreshUserToken = async (
+export const invalidateToken = async (
+  userId: string,
+  refreshToken: string
+): Promise<boolean> => {
+  console.log("Starting invalidateToken");
+
+  try {
+    const deletedRows = await RefreshToken.destroy({
+      where: { user_id: userId, refresh_token: refreshToken },
+    });
+
+    console.log("Delete row number's", deletedRows);
+
+    if (deletedRows > 0) {
+      console.log("Token invalidated successfully");
+      return true; // Explicitly return true if rows were deleted
+    } else {
+      console.log("No matching token found to delete");
+      return false; // Explicitly return false if no rows were deleted
+    }
+  } catch (error) {
+    console.error("Error deleting refresh token:", error);
+    return false; // Explicitly return false on error
+  } finally {
+    console.log("invalidateToken function complete");
+  }
+};
+
+export const updateUserToken = async (
   userId: string,
   refreshToken: string
 ): Promise<UserToken> => {
