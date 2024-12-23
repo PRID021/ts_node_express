@@ -19,7 +19,7 @@
       "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
       "@settings/*": ["src/settings/*"],
-      "@errors/*": ["src/errors/*"],
+      "@res/*": ["src/res/*"],
       "@posts/*": ["/posts"]
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"]

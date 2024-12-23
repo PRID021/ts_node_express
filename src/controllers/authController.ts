@@ -1,12 +1,13 @@
 import { UserToken } from "@app/interfaces";
 import User from "@models/user";
-import { createUserToken, refreshUserToken } from "@services/tokenService";
+import { appErrorCodes, appErrorMessages } from "@res/appErrors";
 import {
-  create200Response,
-  create400CommonReponse,
-  create404Response,
-  create500Response,
-} from "@utils/commonResponses";
+  ApiResponse,
+  common200001Reponse,
+  commonBadResponse,
+  unhandledErrorResponse,
+} from "@res/commons";
+import { createUserToken, refreshUserToken } from "@services/tokenService";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
@@ -18,28 +19,44 @@ export const authenticateUser = async (
   res: Response
 ): Promise<void> => {
   const { email, password } = req.body;
+  let errorResponse: ApiResponse;
   if (!email || !password) {
-    return create400CommonReponse(res, "Email and password are required.");
+    errorResponse = {
+      statusCode: appErrorCodes.unauthorized.login.blank,
+      message: appErrorMessages.unauthorized.login.blank,
+    };
+    res.status(400).json(errorResponse);
+    return;
   }
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return create404Response(res, "user");
+      errorResponse = {
+        statusCode: appErrorCodes.unauthorized.common,
+        message: appErrorMessages.unauthorized.common,
+      };
+      res.status(400).json(errorResponse);
+      return;
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      res.status(401).json({ message: "Invalid credentials." });
+      errorResponse = {
+        statusCode: appErrorCodes.unauthorized.invalid,
+        message: appErrorMessages.unauthorized.invalid,
+      };
+      res.status(401).json(errorResponse);
       return;
     }
     const userToken: UserToken = await createUserToken(user);
-    create200Response<UserToken>({
-      res: res,
-      message: "Authentication successful.",
-      data: userToken,
-    });
+    res.status(200).json(common200001Reponse<UserToken>(userToken));
+    return;
   } catch (err) {
-    console.error("Error during authentication:", err);
-    res.status(500).json({ message: "Internal server error." });
+    const response: ApiResponse = {
+      statusCode: appErrorCodes.internalServerError.common,
+      message: appErrorMessages.internalServerError.common,
+    };
+    res.status(500).json(response);
+    return;
   }
 };
 
@@ -52,18 +69,18 @@ export const refreshAccessToken = async (
 ): Promise<void> => {
   const { userId, refreshToken } = req.body;
   if (!refreshToken) {
-    res.status(400).json({ message: "Refresh token is required." });
+    let missTokenResponse: ApiResponse = {
+      statusCode: appErrorCodes.unauthorized.token.requireRefresh,
+      message: appErrorMessages.unauthorized.token.requireRefresh,
+    };
+    res.status(401).json(missTokenResponse);
     return;
   }
   try {
-    const { accessToken } = await refreshUserToken(userId, refreshToken);
-    res.status(200).json({
-      message: "Access token refreshed.",
-      accessToken,
-    });
+    const newUserToken = await refreshUserToken(userId, refreshToken);
+    res.status(200).json(common200001Reponse<UserToken>(newUserToken));
   } catch (err) {
-    console.error("Error refreshing access token:", err);
-    res.status(403).json({ message: "Invalid or expired refresh token." });
+    res.status(999).json(unhandledErrorResponse);
   }
 };
 
@@ -73,7 +90,7 @@ export const createUser = async (
 ): Promise<void> => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
-    create500Response(res, "Name, email, and password are required.");
+    res.status(500).json(commonBadResponse);
     return;
   }
 
@@ -83,14 +100,9 @@ export const createUser = async (
       email,
       password,
     });
-
-    create200Response({
-      res,
-      message: "User created successfully.",
-      data: newUser,
-    });
+    res.status(200).json(common200001Reponse<User>(newUser));
+    return;
   } catch (err) {
-    create500Response(res, "Failed to create user.");
-    console.error("Error creating user:", err);
+    res.status(999).json(unhandledErrorResponse);
   }
 };
