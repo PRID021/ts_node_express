@@ -1,11 +1,11 @@
 import { Post } from "@models/post";
 import User from "@models/user";
-import { Sequelize } from "sequelize";
-
 import { Media } from "@models/media";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+import { Sequelize } from "sequelize";
+import { Course } from "@models/course";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,11 +28,13 @@ export const seedDatabase = async (sequelize: Sequelize) => {
         name: "hoang.pham",
         email: "hoangduc.uit.dev@gmail.com",
         password: await User.hashPassword("Password123@@"),
+        role: "student",
       },
       {
         name: "Jane Smith",
         email: "jane.smith@example.com",
         password: await User.hashPassword("securePass456"),
+        role: "teacher",
       },
     ]);
 
@@ -85,6 +87,39 @@ export const seedDatabase = async (sequelize: Sequelize) => {
     ]);
 
     console.log("Mock medias created!");
+
+    // Insert mock courses
+    const courses = await Course.bulkCreate([
+      {
+        teacherId: users[1].id,
+        title: "Introduction to Programming",
+        description: "Learn the basics of programming with hands-on examples.",
+        coverImgUrl: "https://picsum.photos/600/400",
+        price: 49.99,
+        createAt: new Date(),
+        updateAt: new Date(),
+      },
+      {
+        teacherId: users[1].id,
+        title: "Advanced JavaScript",
+        description: "Deep dive into JavaScript concepts and frameworks.",
+        coverImgUrl: "https://picsum.photos/600/400",
+        price: 79.99,
+        createAt: new Date(),
+        updateAt: new Date(),
+      },
+      {
+        teacherId: users[1].id,
+        title: "Machine Learning Basics",
+        description: "An introduction to machine learning and AI concepts.",
+        coverImgUrl: "https://picsum.photos/600/400",
+        price: 99.99,
+        createAt: new Date(),
+        updateAt: new Date(),
+      },
+    ]);
+
+    console.log("Mock courses created!");
 
     console.log("Database seeding completed!");
   } catch (error) {

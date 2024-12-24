@@ -1,24 +1,26 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import User from "./user";
 
-export class Post extends Model {
+export class Course extends Model {
   public id!: number;
-  public authorId!: number;
+  public teacherId!: number;
   public title!: string;
-  public content!: string;
-  public shortDescription!: string;
-  public imgUrl!: string;
+  public description!: string;
+  public coverImgUrl!: string;
+  public price!: number;
+  public createAt!: Date;
+  public updateAt!: Date;
 }
 
-export const createPostTable = (sequelize: Sequelize) => {
-  Post.init(
+export const createCourseTable = (sequelize: Sequelize) => {
+  Course.init(
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
       },
-      authorId: {
+      teacherId: {
         type: DataTypes.INTEGER.UNSIGNED,
         references: {
           model: User,
@@ -29,25 +31,31 @@ export const createPostTable = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      shortDescription: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "",
       },
-      imgUrl: {
+      coverImgUrl: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "",
       },
-      content: {
-        type: DataTypes.TEXT,
+      price: {
+        type: DataTypes.DOUBLE,
         allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
     },
     {
       sequelize,
-      modelName: "Post",
-      tableName: "posts",
+      modelName: "Course",
+      tableName: "courses",
       timestamps: true,
     }
   );
