@@ -1,5 +1,5 @@
-import { common200001Reponse, unhandledErrorResponse } from "@res/commons";
-import { saveFile } from "@services/storageService";
+import { common200001Response, unhandledErrorResponse } from "@utils/res/commons";
+import { saveFile } from "@services/storage.service";
 import { Request, Response } from "express";
 
 export const getUserProfile = async (
@@ -10,7 +10,7 @@ export const getUserProfile = async (
     const user = req.user;
     res
       .status(200)
-      .json(common200001Reponse<string>(`Welcome back ${user.name}.`));
+      .json(common200001Response<string>(`Welcome back ${user.name}.`));
   } catch (err) {
     res.status(999).json(unhandledErrorResponse);
   }

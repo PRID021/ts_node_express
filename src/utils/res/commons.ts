@@ -1,4 +1,4 @@
-import { appErrorCodes, appErrorMessages } from "./appErrors";
+import { appErrorCodes, appErrorMessages } from "./app_errors";
 
 
 export type ApiResponse<T = unknown> = {
@@ -10,7 +10,7 @@ export type ApiResponse<T = unknown> = {
 
 
 
-export const common200001Reponse = <T = unknown>(
+export const common200001Response = <T = unknown>(
   data?: T,
   message = "Success"
 ) => {

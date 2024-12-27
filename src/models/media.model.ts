@@ -1,11 +1,10 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { Post } from "./post";
 
 type ContentType = "image" | "video";
 
 export class Media extends Model {
   public id!: number;
-  public postId!: number;
+
   public description!: string;
   public source!: string;
   public thumb!: string;
@@ -22,14 +21,6 @@ export const createMediaTable = (sequelize: Sequelize) => {
         primaryKey: true,
       },
 
-      postId: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        references: {
-          model: Post,
-          key: "id",
-        },
-      },
       description: {
         type: DataTypes.STRING(1000),
         allowNull: false,

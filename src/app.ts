@@ -1,11 +1,12 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 
-import { authMiddleware } from "src/middlewares/authMiddleware";
-import { loggerMiddleware } from "src/middlewares/loggerMiddleware";
+import { authMiddleware } from "@middlewares/auth_middleware";
+import { loggerMiddleware } from "@middlewares/logger_middleware";
 
-import authRoutes from "@routers/authRoutes";
-import landingRoutes from "@routers/landingRoutes";
-import userRoutes from "@routers/userRoutes";
+import authRoutes from "@routers/auth.routes";
+import landingRoutes from "@routers/landing.routes";
+import userRoutes from "@routers/user.routes";
 import { appConfigs } from "@settings/config";
 import { syncDatabase } from "@settings/database";
 import { appDir } from "@utils/pathUtils";
@@ -13,6 +14,9 @@ import path from "path";
 
 const app = express();
 
+
+
+app.use(cookieParser());
 app.use("/app/uploads", express.static(path.join(appDir, "uploads")));
 
 // Create Tables

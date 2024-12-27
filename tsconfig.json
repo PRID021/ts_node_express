@@ -19,7 +19,8 @@
       "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
       "@settings/*": ["src/settings/*"],
-      "@res/*": ["src/res/*"],
+      "@templates/*": ["src/templates/*"],
+      "@res/*": ["src/utils/res/*"],
       "@posts/*": ["/posts"]
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"]

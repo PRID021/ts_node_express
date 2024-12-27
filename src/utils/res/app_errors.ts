@@ -31,6 +31,9 @@ export const appErrorCodes: AppErrorCodes = {
     resetPwd: {
       otp: { invalid: 401005, expired: 401006 },
     },
+    verify: {
+      tokenInvalid: 400001,
+    }
   },
   notFound: {
     common: 404000,
@@ -40,6 +43,7 @@ export const appErrorCodes: AppErrorCodes = {
   badRequest: {
     common: 400000,
     paramIsNaN: 400001,
+    userExits: 400002,
   },
   internalServerError: {
     common: 500000,
@@ -55,7 +59,7 @@ export const appErrorMessages: AppErrorMessages = {
     common: "Unauthorized",
     invalid: "Auth token invalid or expired",
     login: {
-      blank: "Email and password required",
+      blank: "Username and password required",
       token: { failure: "Cannot generate token" },
     },
     resetPwd: {
@@ -64,6 +68,10 @@ export const appErrorMessages: AppErrorMessages = {
     token: {
       requireRefresh: "Missing refresh token",
     },
+
+    verify: {
+      tokenInvalid: "Authentication code invalid or expired.",
+    }
   },
   notFound: {
     common: "Resource not found",
@@ -73,11 +81,12 @@ export const appErrorMessages: AppErrorMessages = {
   badRequest: {
     common: "Bad request",
     paramIsNaN: "Parameter is not a number",
+    userExits: "Username already exits."
   },
   internalServerError: {
     common: "Internal server error",
   },
   unhandled: {
-    common: "Something when wrong, try agianst later.",
+    common: "Something when wrong, try against later.",
   },
 };

@@ -1,6 +1,6 @@
 import { UserToken } from "@app/interfaces";
-import RefreshToken from "@models/refreshToken";
-import User from "@models/user";
+import RefreshToken from "@models/refresh_token.model";
+import User from "@models/user.model";
 import { sequelize } from "@settings/database";
 import jwt from "jsonwebtoken";
 
@@ -14,12 +14,12 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
   const transaction = await sequelize.transaction(); // Start a transaction
   try {
     const accessToken = jwt.sign(
-      { userId: user.id, email: user.email, name: user.name },
+      { userId: user.id, email: user.email, name: user.user_name },
       JWT_ACCESS_SECRET,
       { expiresIn: JWT_ACCESS_EXPIRATION }
     );
     const refreshToken = jwt.sign(
-      { userId: user.id, email: user.email, name: user.name },
+      { userId: user.id, email: user.email, name: user.user_name },
       JWT_REFRESH_SECRET,
       { expiresIn: JWT_REFRESH_EXPIRATION }
     );

@@ -30,6 +30,9 @@ interface UnauthorizedErrorCodes extends ErrorDetailCodes {
   resetPwd: {
     otp: { invalid: number; expired: number };
   };
+  verify: {
+    tokenInvalid: number
+  };
 }
 
 interface UnauthorizedErrorMessages extends ErrorDetailMessages {
@@ -43,6 +46,9 @@ interface UnauthorizedErrorMessages extends ErrorDetailMessages {
   };
   resetPwd: {
     otp: { invalid: string; expired: string };
+  };
+  verify: {
+    tokenInvalid: string
   };
 }
 
@@ -60,10 +66,12 @@ interface NotFoundErrorMessages extends ErrorDetailMessages {
 // Bad Request Error Details
 interface BadRequestErrorCodes extends ErrorDetailCodes {
   paramIsNaN: number;
+  userExits: number;
 }
 
 interface BadRequestErrorMessages extends ErrorDetailMessages {
   paramIsNaN: string;
+  userExits: string;
 }
 
 // Unauthorized Error Messages

@@ -1,24 +1,14 @@
 import { Sequelize } from "sequelize";
-import { createCourseTable } from "./course";
-import { createMediaTable, Media } from "./media";
-import { createPostTable, Post } from "./post";
-import { createRefreshTokenTable } from "./refreshToken";
-import { createUserTable } from "./user";
+
+import { createMediaTable, Media } from "./media.model";
+
+import { createRefreshTokenTable } from "./refresh_token.model";
+import { createUserTable } from "./user.model";
+import { createUserAddressTable } from "./user_address.model";
 
 export const createTables = (sequelize: Sequelize) => {
   createUserTable(sequelize);
-  createPostTable(sequelize);
+  createUserAddressTable(sequelize);
   createRefreshTokenTable(sequelize);
   createMediaTable(sequelize);
-  createCourseTable(sequelize);
-
-  Post.hasMany(Media, {
-    foreignKey: "postId",
-    as: "media",
-  });
-
-  Media.belongsTo(Post, {
-    foreignKey: "postId",
-    as: "post",
-  });
 };

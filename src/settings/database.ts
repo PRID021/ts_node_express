@@ -24,7 +24,6 @@ export const syncDatabase = async () => {
       console.log("Database synchronized.");
     }
     console.log("All models synchronized!");
-    await seedDatabase(sequelize);
   } catch (error) {
     console.error("Failed to synchronize the database:", error);
   }
