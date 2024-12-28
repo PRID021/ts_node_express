@@ -15,10 +15,10 @@ interface UserAttributes {
   deleted_at?: Date;
 
   is_verified: boolean;
-  reset_password_token?: string;
-  reset_password_expires_at?: Date;
-  verification_token?: string;
-  verification_token_expires_at?: Date;
+  reset_password_token?: string | null;
+  reset_password_expires_at?: Date | null;
+  verification_token?: string | null;
+  verification_token_expires_at?: Date | null;
 }
 
 interface UserCreationAttributes
@@ -42,10 +42,10 @@ class User
   public readonly created_at!: Date;
   public readonly deleted_at!: Date;
 
-  public reset_password_token?: string | undefined;
-  public reset_password_expires_at?: Date | undefined;
-  public verification_token?: string | undefined;
-  public verification_token_expires_at?: Date | undefined;
+  public reset_password_token?: string | null;
+  public reset_password_expires_at?: Date | null;
+  public verification_token?: string | null;
+  public verification_token_expires_at?: Date | null;
 
   static async hashPassword(password: string): Promise<string> {
     const saltRounds = 10;

@@ -50,14 +50,14 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
 };
 
 export const invalidateToken = async (
-  userId: string,
-  refreshToken: string
+  user_id: string,
+  refresh_token: string
 ): Promise<boolean> => {
   console.log("Starting invalidateToken");
 
   try {
     const deletedRows = await RefreshToken.destroy({
-      where: { user_id: userId, refresh_token: refreshToken },
+      where: { user_id: user_id, refresh_token: refresh_token },
     });
 
     console.log("Delete row number's", deletedRows);

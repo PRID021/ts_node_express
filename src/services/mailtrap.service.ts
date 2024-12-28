@@ -1,6 +1,8 @@
 import { MailtrapClient } from "mailtrap";
 import dotenv from "dotenv";
 import {
+  PASSWORD_RESET_SUCCESS_TEMPLATE,
+  RESET_PASSWORD_EMAIL_TEMPLATE,
   VERIFICATION_EMAIL_TEMPLATE,
   WELCOME_EMAIL_TEMPLATE,
 } from "@templates/email.template";
@@ -79,6 +81,60 @@ const sendWelcomeEmail = async (
   }
 };
 
+const sendResetPasswordEmail = async (
+  email: string,
+  reset_password_token: string
+): Promise<void> => {
+  const recipient = [{ email }];
+  try {
+    await client.send({
+      from: sender,
+      to: recipient,
+      subject: "Reset your password",
+      html: RESET_PASSWORD_EMAIL_TEMPLATE!.replace(
+        "{reset_password_token}",
+        reset_password_token
+      )!,
+      category: "Email Reset Password",
+    });
+  } catch (error) {
+    throw Error(`Error sending welcome email: ${error}`);
+  }
+};
+
+export const sendChangePasswordSuccessEmail = async (email: string): Promise<void> => {
+  const recipient = [{ email }];
+  try {
+    const response = await client.send({
+      from: sender,
+      to: recipient,
+      subject: "Password Changed Successfully",
+      html: PASSWORD_RESET_SUCCESS_TEMPLATE,
+      category: "Password Change",
+    });
+    console.log("Password change success email sent successfully: ", response);
+  } catch (error) {
+    console.error("Error sending password change success email:", error);
+    throw Error(`Error sending password change success email: ${error}`);
+  }
+};
+
+
+emailQueue.process("sendResetPasswordEmail", async (job) => {
+  try {
+    const { email, reset_password_token } = job.data;
+    console.log(`Processing sendResetPasswordEmail job: ${job.id}`);
+    await sendResetPasswordEmail(email, reset_password_token);
+    console.log(`Completed sendResetPasswordEmail job: ${job.id}`);
+  } catch (error) {
+    console.error(
+      `Error processing sendResetPasswordEmail job ${job.id}:`,
+      error
+    );
+    throw error; // Rethrow the error to retry or mark the job as failed
+  }
+});
+
 // Processor for sendVerificationEmail
 emailQueue.process("sendVerificationEmail", async (job) => {
   try {
@@ -102,6 +158,19 @@ emailQueue.process("sendWelcomeEmail", async (job) => {
     console.log(`Job ${job.id} completed successfully`);
   } catch (error) {
     console.error(`Error processing sendWelcomeEmail job ${job.id}:`, error);
+  }
+});
+
+emailQueue.process("sendChangePasswordSuccessEmail", async (job) => {
+  try {
+    const { email } = job.data;
+    console.log(`Processing sendChangePasswordSuccessEmail job: ${job.id}`);
+    await sendChangePasswordSuccessEmail(email);
+  } catch (error) {
+    console.error(
+      `Error processing sendChangePasswordSuccessEmail job ${job.id}:`,
+      error
+    );
   }
 });
 
@@ -132,6 +201,33 @@ export const queueWelcomeEmail = async (email: string, user_name: string) => {
     console.log(`Welcome email job added to queue with ID: ${job.id}`);
   } catch (error) {
     console.error("Error adding welcome email task to queue:", error);
+    throw Error(`Error adding task to queue: ${error}`);
+  }
+};
+
+export const queueResetPasswordEmail = async (
+  email: string,
+  reset_password_token: string
+): Promise<void> => {
+  try {
+    const job = await emailQueue.add("sendResetPasswordEmail", {
+      email,
+      reset_password_token,
+    });
+    console.log(`Reset password email job added to queue with ID: ${job.id}`);
+  } catch (error) {
+    console.error("Error adding reset password email task to queue:", error);
+    throw Error(`Error adding reset password email task to queue: ${error}`);
+  }
+};
+
+
+export const queueChangePasswordSuccessEmail = async (email: string): Promise<void> => {
+  try {
+    const job = await emailQueue.add("sendChangePasswordSuccessEmail", { email });
+    console.log(`Change password success email job added to queue with ID: ${job.id}`);
+  } catch (error) {
+    console.error("Error adding change password success email task to queue:", error);
     throw Error(`Error adding task to queue: ${error}`);
   }
 };
