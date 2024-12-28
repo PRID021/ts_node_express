@@ -14,8 +14,6 @@ import path from "path";
 
 const app = express();
 
-
-
 app.use(cookieParser());
 app.use("/app/uploads", express.static(path.join(appDir, "uploads")));
 

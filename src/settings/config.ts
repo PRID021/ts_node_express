@@ -32,4 +32,3 @@ export const appConfigs: AppConfigs = {
     return JSON.stringify(appConfigs, null, 2);
   },
 };
-

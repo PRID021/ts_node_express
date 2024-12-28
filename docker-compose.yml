@@ -14,7 +14,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_HOST=redis # New environment variable for Redis
-      - REDIS_PORT=6379  # Redis default port
+      - REDIS_PORT=6379 # Redis default port
     volumes:
       - .:/app
       - /app/node_modules
@@ -40,7 +40,7 @@ services:
     container_name: redis_container
     restart: always
     ports:
-      - "6379:6379"  # Expose Redis on default port
+      - "6379:6379" # Expose Redis on default port
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD} # Optionally set a password for Redis (if you want)
     volumes:

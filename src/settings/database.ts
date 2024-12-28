@@ -1,6 +1,5 @@
 import { createTables } from "@models/index";
 import { appConfigs } from "@settings/config";
-import { seedDatabase } from "@settings/seed";
 import { Sequelize } from "sequelize";
 
 export const sequelize = new Sequelize({

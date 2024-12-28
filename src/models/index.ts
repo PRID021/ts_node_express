@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-import { createMediaTable, Media } from "./media.model";
+import { createMediaTable } from "./media.model";
 
 import { createRefreshTokenTable } from "./refresh_token.model";
 import { createUserTable } from "./user.model";

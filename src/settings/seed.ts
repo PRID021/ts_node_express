@@ -1,5 +1,3 @@
-import User from "@models/user.model";
-import { Media } from "@models/media.model";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";

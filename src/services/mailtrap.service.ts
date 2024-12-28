@@ -102,7 +102,9 @@ const sendResetPasswordEmail = async (
   }
 };
 
-export const sendChangePasswordSuccessEmail = async (email: string): Promise<void> => {
+export const sendChangePasswordSuccessEmail = async (
+  email: string
+): Promise<void> => {
   const recipient = [{ email }];
   try {
     const response = await client.send({
@@ -118,7 +120,6 @@ export const sendChangePasswordSuccessEmail = async (email: string): Promise<voi
     throw Error(`Error sending password change success email: ${error}`);
   }
 };
-
 
 emailQueue.process("sendResetPasswordEmail", async (job) => {
   try {
@@ -221,13 +222,21 @@ export const queueResetPasswordEmail = async (
   }
 };
 
-
-export const queueChangePasswordSuccessEmail = async (email: string): Promise<void> => {
+export const queueChangePasswordSuccessEmail = async (
+  email: string
+): Promise<void> => {
   try {
-    const job = await emailQueue.add("sendChangePasswordSuccessEmail", { email });
-    console.log(`Change password success email job added to queue with ID: ${job.id}`);
+    const job = await emailQueue.add("sendChangePasswordSuccessEmail", {
+      email,
+    });
+    console.log(
+      `Change password success email job added to queue with ID: ${job.id}`
+    );
   } catch (error) {
-    console.error("Error adding change password success email task to queue:", error);
+    console.error(
+      "Error adding change password success email task to queue:",
+      error
+    );
     throw Error(`Error adding task to queue: ${error}`);
   }
 };
