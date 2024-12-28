@@ -34,6 +34,7 @@ backend/build/
 
 frontend/dist/
 frontend/build/
+**/.next/
 
 # TypeScript artifacts
 *.tsbuildinfo
