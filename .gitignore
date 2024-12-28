@@ -17,13 +17,23 @@ backend/.env.test
 backend/.env.local
 backend/.env.*.local
 
+frontend/.env
+frontend/.env.test
+frontend/.env.local
+frontend/.env.*.local
+
 # Dependency directories
 node_modules/
 jspm_packages/
 
 # Build output
+dist/
+build/
 backend/dist/
 backend/build/
+
+frontend/dist/
+frontend/build/
 
 # TypeScript artifacts
 *.tsbuildinfo
@@ -44,9 +54,16 @@ coverage/
 backend/tmp/
 backend/temp/
 
+frontend/tmp/
+frontend/temp/
+
 # Docker-related files
 backend/docker-compose.override.yml
 backend/.env.docker
+
+frontend/docker-compose.override.yml
+frontend/.env.docker
+
 
 # Miscellaneous
 *.bak
