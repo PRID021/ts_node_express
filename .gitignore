@@ -12,18 +12,18 @@ pids
 *.pid.lock
 
 # Environment variables
-.env
-.env.test
-.env.local
-.env.*.local
+backend/.env
+backend/.env.test
+backend/.env.local
+backend/.env.*.local
 
 # Dependency directories
 node_modules/
 jspm_packages/
 
 # Build output
-dist/
-build/
+backend/dist/
+backend/build/
 
 # TypeScript artifacts
 *.tsbuildinfo
@@ -41,12 +41,12 @@ Thumbs.db
 coverage/
 
 # Temporary files
-tmp/
-temp/
+backend/tmp/
+backend/temp/
 
 # Docker-related files
-docker-compose.override.yml
-.env.docker
+backend/docker-compose.override.yml
+backend/.env.docker
 
 # Miscellaneous
 *.bak
