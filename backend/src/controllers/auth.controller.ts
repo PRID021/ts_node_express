@@ -94,8 +94,12 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
     return res.status(500).json(commonBadResponse);
   }
 
-  let isUserNameExits = await User.count({ where: { user_name } });
-  if (isUserNameExits > 0) {
+  let isUserOrEmailExits = await User.count({
+    where: {
+      [Op.or]: [{ user_name }, { email }],
+    },
+  });
+  if (isUserOrEmailExits > 0) {
     const response: ApiResponse = {
       statusCode: appErrorCodes.badRequest.userExits,
       message: appErrorMessages.badRequest.userExits,
@@ -124,6 +128,7 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
     queueVerificationEmail(newUser.email, verification_token);
     return res.status(200).json(common200001Response<User>(newUser));
   } catch (err) {
+    console.error(err);
     return res.status(999).json(unhandledErrorResponse);
   }
 };

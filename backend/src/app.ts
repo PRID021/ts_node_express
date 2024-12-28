@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import { authMiddleware } from "@middlewares/auth_middleware";
 import { loggerMiddleware } from "@middlewares/logger_middleware";
@@ -14,6 +15,7 @@ import path from "path";
 
 const app = express();
 
+app.use(cors());
 app.use(cookieParser());
 app.use("/app/uploads", express.static(path.join(appDir, "uploads")));
 

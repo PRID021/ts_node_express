@@ -44,9 +44,9 @@ body {
 
   }
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 0 0% 7%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
+    --card: 0 0% 13.3%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
@@ -60,7 +60,7 @@ body {
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
+    --border: 0 0% 24.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
     --chart-1: 220 70% 50%;
@@ -69,9 +69,10 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --gradient-start: #111827; 
-    --gradient-middle: #065f46; 
-    --gradient-end: #065f46;
+    --gradient-start: #121212;
+    --gradient-middle: #2A2A2A;
+    --gradient-end: #3E3E3E;
+    
   }
 }
 
