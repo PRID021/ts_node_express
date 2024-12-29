@@ -24,17 +24,28 @@ import { Input } from "../ui/input";
 
 // Validation schema using Zod
 const RegisterFormSchema = z.object({
-  user_name: z.string().min(1, "User Name is required"),
-  first_name: z.string().min(1, "First Name is required"),
-  last_name: z.string().min(1, "Last Name is required"),
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
+  user_name: z
+    .string({ required_error: "User name cannot be empty." })
+    .min(1, "User Name is required"),
+  first_name: z
+    .string({ required_error: "First name cannot be empty." })
+    .min(1, "First Name is required"),
+  last_name: z
+    .string({ required_error: "Last name cannot be empty." })
+    .min(1, "Last Name is required"),
+  email: z
+    .string({ required_error: "Email cannot be empty." })
+    .email("Invalid email address")
+    .min(1, "Email is required"),
   phone_number: z
-    .string()
+    .string({ required_error: "Phone number cannot be empty." })
     .regex(/^\d+$/, "Phone number must be numeric") // Ensures the phone number is numeric
     .min(1, "Phone number is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z
+    .string({ required_error: "Password cannot be empty." })
+    .min(6, "Password must be at least 6 characters"),
   birth_of_day: z
-    .date()
+    .date({ required_error: "Birth of date cannot be empty." })
     .refine((date) => date instanceof Date && !isNaN(date.getTime()), {
       message: "Date of birth is required",
     }),
@@ -237,7 +248,6 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="password"
@@ -245,10 +255,11 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
               <PasswordStrengthMeter password={field.value ?? ""} />
             )}
           />
-
-          <Button className="w-full mt-8" type="submit">
-            Create Account
-          </Button>
+          <div className="pt-4">
+            <Button className="w-full" type="submit">
+              Create Account
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

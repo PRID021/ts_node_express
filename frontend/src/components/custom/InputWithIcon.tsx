@@ -8,7 +8,7 @@ interface InputWithIconProps
 
 export function InputWithIcon({ icon: Icon, ...props }: InputWithIconProps) {
   return (
-    <div className="relative mb-6">
+    <div className="relative my-2">
       <span className="absolute inset-y-0 left-3 flex items-center">
         {Icon && <Icon className="w-5 h-5" />}
       </span>

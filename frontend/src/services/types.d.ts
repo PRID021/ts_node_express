@@ -20,7 +20,10 @@ export type RegisterRequest = Omit<
   "id" | "avatar" | "is_verified" | "createdAt" | "updatedAt"
 >;
 
+export type VerifyRequest = { code: string; user_id: string };
+
 // Define the type of the authServiceInstance
 export interface AuthService {
   register: (userData: RegisterRequest) => Promise<ServerResponse<User>>;
+  verify: (verifyData: VerifyRequest) => Promise<ServerResponse<undefined>>;
 }
