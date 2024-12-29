@@ -13,12 +13,15 @@ export const getUserProfile = async (
   try {
     const { id, user_name, email } = req.user;
 
+    console.log(req.user);
+
     const userData = await User.findOne({ where: { id, email, user_name } });
     if (!userData) {
       throw Error("User profile not found");
     }
     res.status(200).json(common200001Response<User>(userData));
   } catch (err) {
+    console.error(err);
     res.status(999).json(unhandledErrorResponse);
   }
 };

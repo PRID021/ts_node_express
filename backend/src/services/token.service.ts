@@ -14,12 +14,12 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
   const transaction = await sequelize.transaction(); // Start a transaction
   try {
     const accessToken = jwt.sign(
-      { userId: user.id, email: user.email, name: user.user_name },
+      { id: user.id, email: user.email, user_name: user.user_name },
       JWT_ACCESS_SECRET,
       { expiresIn: JWT_ACCESS_EXPIRATION }
     );
     const refreshToken = jwt.sign(
-      { userId: user.id, email: user.email, name: user.user_name },
+      { id: user.id, email: user.email, user_name: user.user_name },
       JWT_REFRESH_SECRET,
       { expiresIn: JWT_REFRESH_EXPIRATION }
     );

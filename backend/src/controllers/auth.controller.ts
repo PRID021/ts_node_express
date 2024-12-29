@@ -124,7 +124,6 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
       is_verified: false,
     });
 
-    // generateTokenAndSetCookie(res, newUser.id);
     queueVerificationEmail(newUser.email, verification_token);
     return res.status(200).json(common200001Response<User>(newUser));
   } catch (err) {

@@ -27,8 +27,8 @@ node_modules/
 jspm_packages/
 
 # Build output
-dist/
-build/
+**/dist/
+**/build/
 backend/dist/
 backend/build/
 
