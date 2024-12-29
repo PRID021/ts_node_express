@@ -7,16 +7,22 @@ import SignUpButton from "./SignUpButton";
 import { SignInButton } from "./SignInButton";
 import { toast } from "@/hooks/use-toast";
 import { useAuthService } from "@/hooks/use-authService";
+import { useUserService } from "@/hooks/use-userService";
+import useAuthStore from "@/stores/authStore";
+import UserButton from "./UserButton";
 
 const languageSwitch = (currentLanguage: string) => {
   return currentLanguage === "en" ? "es" : "en";
 };
 
 function NonDashBoardNavbar() {
+  const { user, setUser } = useAuthStore();
+
   const { theme, toggleTheme } = useTheme();
   const [language, setLanguage] = useState("en");
 
   const authService = useAuthService();
+  const userService = useUserService();
 
   return (
     <div className="w-full p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
@@ -24,26 +30,35 @@ function NonDashBoardNavbar() {
         <div className="text-white text-xl">Logo</div>
 
         <div className="flex items-center space-x-4">
-          <SignInButton
-            onSubmit={async (data) => {
-              if (!authService) return false;
-              try {
-                const userToken = await authService.signIn(data);
-                return userToken !== null;
-              } catch (error) {
-                toast({
-                  variant: "destructive",
-                  title: "SignIn Failed",
-                  description:
-                    error instanceof Error
-                      ? error.message
-                      : "An unexpected error occurred.",
-                });
-                return false;
-              }
-            }}
-          />
-          <SignUpButton />
+          {!user && (
+            <SignInButton
+              onSubmit={async (data) => {
+                if (!authService) return false;
+                try {
+                  const userToken = await authService.signIn(data);
+                  if (userToken && userService) {
+                    const user = await userService.profile();
+                    setUser(user);
+                  }
+                  return userToken !== null;
+                } catch (error) {
+                  toast({
+                    variant: "destructive",
+                    title: "SignIn Failed",
+                    description:
+                      error instanceof Error
+                        ? error.message
+                        : "An unexpected error occurred.",
+                  });
+                  return false;
+                }
+              }}
+            />
+          )}
+          {!user && <SignUpButton />}
+
+          {user && <UserButton />}
+
           <Button
             onClick={() => setLanguage(languageSwitch(language))}
             className="bg-card text-foreground"

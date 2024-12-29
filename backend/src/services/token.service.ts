@@ -13,12 +13,12 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
   const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
   const transaction = await sequelize.transaction(); // Start a transaction
   try {
-    const accessToken = jwt.sign(
+    const access_token = jwt.sign(
       { id: user.id, email: user.email, user_name: user.user_name },
       JWT_ACCESS_SECRET,
       { expiresIn: JWT_ACCESS_EXPIRATION }
     );
-    const refreshToken = jwt.sign(
+    const refresh_token = jwt.sign(
       { id: user.id, email: user.email, user_name: user.user_name },
       JWT_REFRESH_SECRET,
       { expiresIn: JWT_REFRESH_EXPIRATION }
@@ -33,15 +33,15 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
     await RefreshToken.create(
       {
         user_id: user.id,
-        refresh_token: refreshToken,
+        refresh_token: refresh_token,
         expires_at: expiresAt,
       },
       { transaction }
     );
     await transaction.commit();
     return {
-      accessToken,
-      refreshToken,
+      access_token,
+      refresh_token,
     };
   } catch (err) {
     await transaction.rollback();
@@ -78,11 +78,11 @@ export const invalidateToken = async (
 };
 
 export const updateUserToken = async (
-  userId: string,
-  refreshToken: string
+  user_id: string,
+  refresh_token: string
 ): Promise<UserToken> => {
   const storedToken = await RefreshToken.findOne({
-    where: { user_id: userId, refresh_token: refreshToken },
+    where: { user_id: user_id, refresh_token: refresh_token },
   });
 
   // Step 1: Check if the refresh token exists in the database
@@ -98,7 +98,7 @@ export const updateUserToken = async (
   // Step 3: Verify the refresh token using JWT
   let decoded;
   try {
-    decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET) as {
+    decoded = jwt.verify(refresh_token, JWT_REFRESH_SECRET) as {
       userId: number;
       email: string;
       name: string;
@@ -108,7 +108,7 @@ export const updateUserToken = async (
   }
 
   // Step 4: Generate a new access token
-  const accessToken = jwt.sign(
+  const access_token = jwt.sign(
     { userId: decoded.userId, email: decoded.email, name: decoded.name },
     JWT_ACCESS_SECRET,
     { expiresIn: JWT_ACCESS_EXPIRATION }
@@ -116,8 +116,8 @@ export const updateUserToken = async (
 
   // Step 5: Return the new tokens
   const userToken: UserToken = {
-    accessToken,
-    refreshToken,
+    access_token,
+    refresh_token,
   };
   return userToken;
 };

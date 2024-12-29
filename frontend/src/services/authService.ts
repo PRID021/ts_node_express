@@ -16,6 +16,7 @@ export interface AuthService {
   register: (userData: RegisterRequest) => Promise<User | null>;
   verify: (verifyData: VerifyRequest) => Promise<boolean>;
   signIn: (signInData: SignInRequest) => Promise<UserToken | null>;
+  getAccessToken: () => string | null;
 }
 @injectable()
 export class AuthServiceImpl implements AuthService {

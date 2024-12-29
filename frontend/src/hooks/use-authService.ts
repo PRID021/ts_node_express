@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { container } from "@/di-container";
-import { AuthService } from "@/services/auth/authService";
+import { AuthService } from "@/services/authService";
 import { TYPES } from "@/types";
 
 export const useAuthService = () => {
