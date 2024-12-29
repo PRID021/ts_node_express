@@ -1,16 +1,23 @@
-import { common200001Response, unhandledErrorResponse } from "@utils/res/commons";
+import {
+  common200001Response,
+  unhandledErrorResponse,
+} from "@utils/res/commons";
 import { saveFile } from "@services/storage.service";
 import { Request, Response } from "express";
+import User from "@models/user.model";
 
 export const getUserProfile = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const user = req.user;
-    res
-      .status(200)
-      .json(common200001Response<string>(`Welcome back ${user.name}.`));
+    const { id, user_name, email } = req.user;
+
+    const userData = await User.findOne({ where: { id, email, user_name } });
+    if (!userData) {
+      throw Error("User profile not found");
+    }
+    res.status(200).json(common200001Response<User>(userData));
   } catch (err) {
     res.status(999).json(unhandledErrorResponse);
   }

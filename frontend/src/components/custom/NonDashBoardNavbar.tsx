@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import SignUpButton from "./SignUpButton";
 import { SignInButton } from "./SignInButton";
 import { toast } from "@/hooks/use-toast";
+import { useAuthService } from "@/hooks/use-authService";
 
 const languageSwitch = (currentLanguage: string) => {
   return currentLanguage === "en" ? "es" : "en";
@@ -15,35 +16,8 @@ function NonDashBoardNavbar() {
   const { theme, toggleTheme } = useTheme();
   const [language, setLanguage] = useState("en");
 
-  const handleSubmit = async (data: {
-    user_name: string;
-    password: string;
-  }): Promise<boolean> => {
-    try {
-      // Simulate an async operation (e.g., sending data to an API)
-      toast({
-        title: "Registration Successful!",
-        description: JSON.stringify(data),
-      });
+  const authService = useAuthService();
 
-      // Simulate a delay or async operation here
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Mock 3-second delay
-
-      // If everything is successful, return true
-      return true;
-    } catch (error) {
-      // In case of an error, return false
-      toast({
-        variant: "destructive",
-        title: "Registration Failed",
-        description:
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred.",
-      });
-      return false; // Indicate failure
-    }
-  };
   return (
     <div className="w-full p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
       <div className="flex justify-between items-center">
@@ -52,7 +26,21 @@ function NonDashBoardNavbar() {
         <div className="flex items-center space-x-4">
           <SignInButton
             onSubmit={async (data) => {
-              return await handleSubmit(data);
+              if (!authService) return false;
+              try {
+                const userToken = await authService.signIn(data);
+                return userToken !== null;
+              } catch (error) {
+                toast({
+                  variant: "destructive",
+                  title: "SignIn Failed",
+                  description:
+                    error instanceof Error
+                      ? error.message
+                      : "An unexpected error occurred.",
+                });
+                return false;
+              }
             }}
           />
           <SignUpButton />

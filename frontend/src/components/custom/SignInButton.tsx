@@ -110,6 +110,7 @@ export function SignInButton({ onSubmit }: SignInFormProps) {
                       {...field}
                       icon={Lock}
                       placeholder="Enter you password"
+                      type="password"
                       value={field.value || ""}
                     />
                   </FormControl>

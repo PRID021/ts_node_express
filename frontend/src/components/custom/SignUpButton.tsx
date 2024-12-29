@@ -12,17 +12,18 @@ import {
 
 import { RegisterForm } from "./RegisterForm";
 import { toast } from "@/hooks/use-toast";
-import { authServiceInstance } from "@/services/auth/authService";
 import { InputOTPForm } from "./InputOTPForm";
 import { AxiosError } from "axios";
-import { User } from "@/models/User";
+import { User } from "@/domain/models/User";
 import { Button } from "../ui/button";
+import { useAuthService } from "@/hooks/use-authService";
 
 function SignUpButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
 
   const [user, setUser] = useState<User | null>(null);
+  const authService = useAuthService();
 
   const clearRegisterState = () => {
     setUser(null);
@@ -51,20 +52,17 @@ function SignUpButton() {
         {step === 1 && (
           <RegisterForm
             onSubmit={async (data) => {
+              if (!authService) return;
               try {
                 // Format the data (convert birth_of_day to ISO string)
                 const formattedData = {
                   ...data,
                   birth_of_day: data.birth_of_day.toISOString(),
                 };
-
-                const serverResponse = await authServiceInstance.register(
-                  formattedData
-                );
-                setUser(serverResponse.data);
-
+                const createdUser = await authService.register(formattedData);
+                if (!createdUser) return;
+                setUser(createdUser);
                 setStep(2);
-
                 toast({
                   title: "Registration Successful!",
                   description:
@@ -88,7 +86,7 @@ function SignUpButton() {
         {step === 2 && (
           <InputOTPForm
             onSubmit={async (otpFrom) => {
-              if (!user) {
+              if (!user || !authService) {
                 return;
               }
               const formData = {
@@ -96,7 +94,8 @@ function SignUpButton() {
                 user_id: user.id.toString(),
               };
               try {
-                await authServiceInstance.verify(formData);
+                const success = await authService.verify(formData);
+                if (!success) return;
                 toast({
                   title: "Verify Successful!",
                   description:
@@ -108,8 +107,8 @@ function SignUpButton() {
                   variant: "destructive",
                   title: "Verification Failed",
                   description:
-                    error instanceof Error
-                      ? error.message
+                    error instanceof AxiosError
+                      ? error.response?.data?.message || error.message
                       : "An unexpected error occurred. Please try again later.",
                 });
               }
