@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "@/providers/ThemeContext";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import SignUpButton from "./SignUpButton";
 import { SignInButton } from "./SignInButton";
@@ -10,23 +10,21 @@ import { useAuthService } from "@/hooks/use-authService";
 import { useUserService } from "@/hooks/use-userService";
 import useAuthStore from "@/stores/authStore";
 import UserButton from "./UserButton";
-
-const languageSwitch = (currentLanguage: string) => {
-  return currentLanguage === "en" ? "es" : "en";
-};
+import { Search } from "lucide-react";
+import { SheetDemo } from "./NavSideBar";
 
 function NonDashBoardNavbar() {
   const { user, setUser } = useAuthStore();
 
   const { theme, toggleTheme } = useTheme();
-  const [language, setLanguage] = useState("en");
 
   const authService = useAuthService();
   const userService = useUserService();
 
   return (
-    <div className="w-full p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
-      <div className="flex justify-between items-center">
+    <div className="w-full p-4 bg-red-400">
+      {/* Tablet and higher */}
+      <div className=" justify-between items-center hidden sm:flex">
         <div className="text-white text-xl">Logo</div>
 
         <div className="flex items-center space-x-4">
@@ -60,17 +58,28 @@ function NonDashBoardNavbar() {
           {user && <UserButton />}
 
           <Button
-            onClick={() => setLanguage(languageSwitch(language))}
-            className="bg-card text-foreground"
+            onClick={toggleTheme}
+            className="bg-card text-foreground hover:bg-button-hover"
           >
-            {language === "en" ? "ES" : "EN"}
-          </Button>
-
-          {/* Theme Toggle Button */}
-          <Button onClick={toggleTheme} className="bg-card text-foreground">
             {theme === "light" ? "🌙" : "🌞"}
           </Button>
         </div>
+      </div>
+      {/* Mobile  */}
+
+      <div className=" justify-between items-center flex sm:hidden">
+        <SheetDemo />
+
+        <h3 className="text-white text-xl">Logo</h3>
+
+        <Button
+          variant="ghost"
+          aria-label="Search"
+          className="flex items-center p-2 text-gray-500 hover:text-white hover:bg-gray-700 rounded"
+        >
+          <Search className="w-5 h-5" />
+          <span className="ml-2 hidden sm:block">Search</span>
+        </Button>
       </div>
     </div>
   );

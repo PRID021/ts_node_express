@@ -15,6 +15,7 @@ export interface AuthService {
   register: (userData: RegisterRequest) => Promise<User | null>;
   verify: (verifyData: VerifyRequest) => Promise<boolean>;
   signIn: (signInData: SignInRequest) => Promise<null>;
+  logout: () => Promise<boolean>;
 }
 @injectable()
 export class AuthServiceImpl implements AuthService {
@@ -46,6 +47,15 @@ export class AuthServiceImpl implements AuthService {
     try {
       await this.authRepository.signIn(signInData);
       return null;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  logout = async (): Promise<boolean> => {
+    try {
+      await this.authRepository.logout();
+      return true;
     } catch (error) {
       throw error;
     }

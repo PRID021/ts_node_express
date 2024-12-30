@@ -39,7 +39,9 @@ function SignUpButton() {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="outline">Sign Up</Button>
+        <Button variant="outline" className="hover:bg-button-hover">
+          Sign Up
+        </Button>
       </DialogTrigger>
       <DialogContent
         className="m-0 p-0"

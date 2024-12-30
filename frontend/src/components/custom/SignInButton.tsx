@@ -61,6 +61,7 @@ export function SignInButton({ onSubmit }: SignInFormProps) {
             setIsOpen(true);
           }}
           variant="outline"
+          className="hover:bg-button-hover"
         >
           {isLoading ? <LoadingSpinner /> : <p>Sign In</p>}
         </Button>

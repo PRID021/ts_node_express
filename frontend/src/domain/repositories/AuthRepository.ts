@@ -14,4 +14,5 @@ export interface AuthRepository {
   register: (userData: RegisterRequest) => Promise<ServerResponse<User>>;
   verify: (verifyData: VerifyRequest) => Promise<ServerResponse<undefined>>;
   signIn: (signInData: SignInRequest) => Promise<ServerResponse<undefined>>;
+  logout: () => Promise<ServerResponse<undefined>>;
 }

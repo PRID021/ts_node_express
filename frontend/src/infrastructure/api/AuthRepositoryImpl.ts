@@ -33,4 +33,8 @@ export class AuthRepositoryImpl implements AuthRepository {
   ): Promise<ServerResponse<undefined>> => {
     return await this.axiosInstance.post("/auth/sign-in", signInData);
   };
+
+  logout = async (): Promise<ServerResponse<undefined>> => {
+    return await this.axiosInstance.post("/auth/logout");
+  };
 }

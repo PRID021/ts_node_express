@@ -2,7 +2,7 @@ import NonDashBoardNavbar from "@/components/custom/NonDashBoardNavbar";
 
 export default function Home() {
   return (
-    <div className="min-w-screen min-h-screen">
+    <div className="min-w-screen  min-h-screen flex items-start justify-center ">
       <NonDashBoardNavbar />
     </div>
   );

@@ -11,6 +11,7 @@ import {
 import useAuthStore from "@/stores/authStore";
 import { useRouter } from "next/navigation";
 import { useAuthService } from "@/hooks/use-authService";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const UserButton: React.FC = () => {
   const { user, clearUser } = useAuthStore();
@@ -19,23 +20,25 @@ const UserButton: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      clearUser(() => {
-        authService?.delUserToken();
-      });
+      await authService?.logout();
+      clearUser();
       router.push("/");
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
 
-  if (!user) return null; 
+  if (!user) return null;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-card text-foreground">
+        <Button className=" bg-card text-foreground hover:bg-button-hover flex items-center justify-between">
           {user.user_name || "User"}{" "}
-          {/* Replace with user-specific display name */}
+          <Avatar className="w-8 h-8 p-0 ml-2 ">
+            <AvatarImage src={user.avatar} alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-card text-foreground">

@@ -4,17 +4,14 @@ import { create } from "zustand";
 interface AuthState {
   user: User | null;
   setUser: (user: User) => void;
-  clearUser: (delUserToken: () => void) => void;
+  clearUser: () => void;
   initializeUser: (fetchUser: () => Promise<User | null>) => Promise<void>;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
   user: null, // Initial state
   setUser: (user) => set({ user }),
-  clearUser: (delUserToken) => {
-    delUserToken();
-    set({ user: null });
-  },
+  clearUser: () => set({ user: null }),
   initializeUser: async (fetchUser) => {
     try {
       const user = await fetchUser();
