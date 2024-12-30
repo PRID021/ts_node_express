@@ -35,12 +35,12 @@ function NonDashBoardNavbar() {
               onSubmit={async (data) => {
                 if (!authService) return false;
                 try {
-                  const userToken = await authService.signIn(data);
-                  if (userToken && userService) {
+                  await authService.signIn(data);
+                  if (userService) {
                     const user = await userService.profile();
                     setUser(user);
                   }
-                  return userToken !== null;
+                  return true;
                 } catch (error) {
                   toast({
                     variant: "destructive",

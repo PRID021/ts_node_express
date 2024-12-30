@@ -1,18 +1,28 @@
-import { User } from '@/domain/models/User';
-import { create } from 'zustand';
+import { User } from "@/domain/models/User";
+import { create } from "zustand";
 
-// Define the shape of your store
 interface AuthState {
   user: User | null;
   setUser: (user: User) => void;
-  clearUser: () => void;
+  clearUser: (delUserToken: () => void) => void;
+  initializeUser: (fetchUser: () => Promise<User | null>) => Promise<void>;
 }
 
-// Create the store with types
 const useAuthStore = create<AuthState>((set) => ({
   user: null, // Initial state
-  setUser: (user) => set({ user }), // Method to set user
-  clearUser: () => set({ user: null }), // Method to clear user
+  setUser: (user) => set({ user }),
+  clearUser: (delUserToken) => {
+    delUserToken();
+    set({ user: null });
+  },
+  initializeUser: async (fetchUser) => {
+    try {
+      const user = await fetchUser();
+      set({ user });
+    } catch {
+      set({ user: null }); // Handle errors by setting user to null
+    }
+  },
 }));
 
 export default useAuthStore;

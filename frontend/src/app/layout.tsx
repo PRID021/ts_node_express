@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeContext";
 import { Toaster } from "@/components/ui/toaster";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import AppInitializer from "@/components/custom/AppInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,15 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ThemeProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end`}
-        >
-          {children}
-          <Toaster />
-        </body>
-      </html>
-    </ThemeProvider>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end`}
+      >
+        <ThemeProvider>
+          <ReactQueryProvider>
+            <AppInitializer />
+            {children}
+            <Toaster />
+          </ReactQueryProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

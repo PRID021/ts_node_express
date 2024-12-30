@@ -13,9 +13,17 @@ import { syncDatabase } from "@settings/database";
 import { appDir } from "@utils/pathUtils";
 import path from "path";
 
+
+
+
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Allow your frontend domain
+    credentials: true, // Allow cookies to be sent
+  })
+);
 app.use(cookieParser());
 app.use("/app/uploads", express.static(path.join(appDir, "uploads")));
 

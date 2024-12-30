@@ -17,9 +17,13 @@ import {
 import {
   createUserToken,
   invalidateToken,
-  updateUserToken,
+  updateUserRefreshToken,
 } from "@services/token.service";
-import { generateVerificationToken } from "@utils/verification_helper";
+import {
+  clearUserTokenCookie,
+  generateVerificationToken,
+  setUserTokenCookie,
+} from "@utils/verification_helper";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import { Op } from "sequelize";
@@ -62,7 +66,9 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
       return res.status(401).json(errorResponse);
     }
     const userToken: UserToken = await createUserToken(user);
-    return res.status(200).json(common200001Response<UserToken>(userToken));
+    setUserTokenCookie(res, userToken);
+
+    return res.status(200).json(common200001Response());
   } catch (err) {
     const response: ApiResponse = {
       statusCode: appErrorCodes.internalServerError.common,
@@ -132,30 +138,18 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-/**
- * Refresh access token using the refresh token.
- */
-export const refresh = async (req: Request, res: Response): Promise<any> => {
-  const { userId, refreshToken } = req.body;
-  if (!refreshToken) {
-    return res.status(401).json(missTokenResponse);
-  }
-  try {
-    const newUserToken = await updateUserToken(userId, refreshToken);
-    return res.status(200).json(common200001Response<UserToken>(newUserToken));
-  } catch (err) {
-    return res.status(999).json(unhandledErrorResponse);
-  }
-};
-
 export const logout = async (req: Request, res: Response): Promise<any> => {
-  // clearCookie(res);
-  const { user_id, refresh_token } = req.body;
+  const refresh_token = req.cookies.refresh_token;
+  const { user_id } = req.user;
+
+  console.log("162: ", user_id, refresh_token);
+
   if (!refresh_token || !user_id) {
     return res.status(401).json(missTokenResponse);
   }
   try {
     await invalidateToken(user_id, refresh_token);
+    clearUserTokenCookie(res);
     return res.status(200).json(common200001Response());
   } catch (error) {
     return res.status(999).json(unhandledErrorResponse);
@@ -243,7 +237,7 @@ export const forgotPassword = async (
       .status(200)
       .json(
         common200001Response(
-          null,
+          undefined,
           "Verification code have been send to your email."
         )
       );

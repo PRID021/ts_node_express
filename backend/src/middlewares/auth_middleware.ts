@@ -1,29 +1,80 @@
+import { UserToken } from "@app/interfaces";
+import { updateUserRefreshToken } from "@services/token.service";
+import { setUserTokenCookie } from "@utils/verification_helper";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const JWT_ACCESS_SECRET = "your_jwt_access_secret"; // Replace with your actual secret
+import dotenv from "dotenv";
 
-export const authMiddleware = (
+dotenv.config();
+
+const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET!;
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
+
+/**
+ * Middleware to handle access token authentication and automatic refresh if expired.
+ */
+export const authMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
-): void => {
-  const token = req.headers["authorization"]?.split(" ")[1]; // Get token from "Authorization: Bearer <token>"
+): Promise<any> => {
+  console.log("Cookie: ", req.cookies);
 
-  if (!token) {
-    res.status(401).json({ message: "Access token required." });
-    return;
+  const access_token = req.cookies.access_token; // HttpOnly cookie
+  const refresh_token = req.cookies.refresh_token; // HttpOnly cookie
+
+  if (!access_token) {
+    return res.status(401).json({ message: "Access token required." });
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_ACCESS_SECRET) as {
-      userId: number;
+    // Verify the access token
+    const decoded = jwt.verify(access_token, JWT_ACCESS_SECRET) as {
+      user_id: number;
       email: string;
     };
-    req.user = decoded; // Attach user info to the request object
-    next();
-  } catch (err) {
+    console.log("decode: ", decoded);
+    // Attach user info to the request object
+    req.user = decoded;
+
+    // Call next() to pass control to the next middleware
+    return next();
+  } catch (err: any) {
+    if (err.name === "TokenExpiredError" && refresh_token) {
+      console.log("Perform logic re-new token");
+
+      try {
+        // Verify the refresh token
+        const { user_id, email } = jwt.verify(
+          refresh_token,
+          JWT_REFRESH_SECRET
+        ) as {
+          user_id: number;
+          email: string;
+        };
+
+        const userToken: UserToken = await updateUserRefreshToken(
+          user_id.toString(),
+          refresh_token
+        );
+        setUserTokenCookie(res, userToken);
+
+        // Attach user info to the request object
+        req.user = { user_id, email };
+
+        return next();
+      } catch (refreshErr) {
+        console.error("Error verifying refresh token:", refreshErr);
+        return res
+          .status(401)
+          .json({ message: "Invalid or expired refresh token." });
+      }
+    }
+
     console.error("Error verifying access token:", err);
-    res.status(401).json({ message: "Invalid or expired access token." });
+    return res
+      .status(401)
+      .json({ message: "Invalid or expired access token." });
   }
 };

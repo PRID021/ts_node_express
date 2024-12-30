@@ -14,12 +14,12 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
   const transaction = await sequelize.transaction(); // Start a transaction
   try {
     const access_token = jwt.sign(
-      { id: user.id, email: user.email, user_name: user.user_name },
+      { user_id: user.id, email: user.email, user_name: user.user_name },
       JWT_ACCESS_SECRET,
       { expiresIn: JWT_ACCESS_EXPIRATION }
     );
     const refresh_token = jwt.sign(
-      { id: user.id, email: user.email, user_name: user.user_name },
+      { user_id: user.id, email: user.email, user_name: user.user_name },
       JWT_REFRESH_SECRET,
       { expiresIn: JWT_REFRESH_EXPIRATION }
     );
@@ -42,7 +42,7 @@ export const createUserToken = async (user: User): Promise<UserToken> => {
     return {
       access_token,
       refresh_token,
-    };
+    } satisfies UserToken;
   } catch (err) {
     await transaction.rollback();
     throw new Error("Failed to create user tokens");
@@ -77,7 +77,7 @@ export const invalidateToken = async (
   }
 };
 
-export const updateUserToken = async (
+export const updateUserRefreshToken = async (
   user_id: string,
   refresh_token: string
 ): Promise<UserToken> => {
@@ -92,16 +92,17 @@ export const updateUserToken = async (
   // Step 2: Verify if the refresh token has expired
   const now = new Date();
   if (storedToken.expires_at < now) {
+    await storedToken.destroy();
     throw new Error("Refresh token has expired.");
   }
 
   // Step 3: Verify the refresh token using JWT
   let decoded;
   try {
-    decoded = jwt.verify(refresh_token, JWT_REFRESH_SECRET) as {
-      userId: number;
+    decoded = jwt.verify(storedToken.refresh_token, JWT_REFRESH_SECRET) as {
+      user_id: number;
       email: string;
-      name: string;
+      user_name: string;
     };
   } catch (err) {
     throw new Error("Invalid refresh token.");
@@ -109,7 +110,7 @@ export const updateUserToken = async (
 
   // Step 4: Generate a new access token
   const access_token = jwt.sign(
-    { userId: decoded.userId, email: decoded.email, name: decoded.name },
+    { user_id: decoded.user_id, email: decoded.email, name: decoded.user_name },
     JWT_ACCESS_SECRET,
     { expiresIn: JWT_ACCESS_EXPIRATION }
   );

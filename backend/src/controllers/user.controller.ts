@@ -11,11 +11,10 @@ export const getUserProfile = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, user_name, email } = req.user;
-
-    console.log(req.user);
-
-    const userData = await User.findOne({ where: { id, email, user_name } });
+    const { user_id, email } = req.user;
+    const userData = await User.findOne({
+      where: { id: user_id, email },
+    });
     if (!userData) {
       throw Error("User profile not found");
     }

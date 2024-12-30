@@ -9,37 +9,28 @@ import {
 } from "@/domain/repositories/AuthRepository";
 import type { AxiosInstance } from "axios";
 import { TYPES } from "../../types";
-import { UserToken } from "@/domain/models/UserToken";
-
 
 @injectable()
 export class AuthRepositoryImpl implements AuthRepository {
   constructor(
-    @inject(TYPES.AxiosInstance) private axiosInstance: AxiosInstance,
-
+    @inject(TYPES.AxiosInstance) private axiosInstance: AxiosInstance
   ) {}
 
   register = async (
     userData: RegisterRequest
   ): Promise<ServerResponse<User>> => {
-    return await this.axiosInstance.post("/auth/sign-up", userData, {
-      requiresAuth: false,
-    });
+    return await this.axiosInstance.post("/auth/sign-up", userData);
   };
 
   verify = async (
     verifyData: VerifyRequest
   ): Promise<ServerResponse<undefined>> => {
-    return await this.axiosInstance.post("/auth/verify-email", verifyData, {
-      requiresAuth: false,
-    });
+    return await this.axiosInstance.post("/auth/verify-email", verifyData);
   };
 
   signIn = async (
     signInData: SignInRequest
-  ): Promise<ServerResponse<UserToken>> => {
-    return await this.axiosInstance.post("/auth/sign-in", signInData, {
-      requiresAuth: false,
-    });
+  ): Promise<ServerResponse<undefined>> => {
+    return await this.axiosInstance.post("/auth/sign-in", signInData);
   };
 }

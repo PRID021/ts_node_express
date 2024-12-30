@@ -11,6 +11,6 @@ export class UserRepositoryImpl implements UserRepository {
     @inject(TYPES.AxiosInstance) private axiosInstance: AxiosInstance
   ) {}
   getProfile = async (): Promise<ServerResponse<User>> => {
-    return this.axiosInstance.get("/user", { requiresAuth: true });
+    return this.axiosInstance.get("/user");
   };
 }

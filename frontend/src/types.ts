@@ -13,8 +13,8 @@ export interface TokenRetrieve {
   getAccessToken: () => string | null;
 }
 declare module "axios" {
-  export interface AxiosRequestConfig {
-    requiresAuth?: boolean;
-    tokenRetrieve?:  TokenRetrieve
-  }
+  // export interface AxiosRequestConfig {
+  //   requiresAuth?: boolean;
+  //   tokenRetrieve?:  TokenRetrieve
+  // }
 }

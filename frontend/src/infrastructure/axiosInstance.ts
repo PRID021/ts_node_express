@@ -1,6 +1,3 @@
-import { container } from "@/di-container";
-import { AuthService } from "@/services/authService";
-import { TYPES } from "@/types";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -9,21 +6,12 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Check if the request requires authentication
-    if (config.requiresAuth) {
-      const authService = container.get<AuthService>(TYPES.AuthService);
-      const token = authService.getAccessToken(); // Adjust based on your token storage
-
-      console.log("Token ==>", token);
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    }
     return config;
   },
   (error) => Promise.reject(error)

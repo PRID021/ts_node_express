@@ -10,22 +10,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useAuthStore from "@/stores/authStore";
 import { useRouter } from "next/navigation";
+import { useAuthService } from "@/hooks/use-authService";
 
 const UserButton: React.FC = () => {
   const { user, clearUser } = useAuthStore();
+  const authService = useAuthService();
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
-      // Perform any additional logout logic if needed
-      clearUser();
-      router.push("/"); // Redirect to the homepage or a login page
+      clearUser(() => {
+        authService?.delUserToken();
+      });
+      router.push("/");
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
 
-  if (!user) return null; // Safeguard in case this is rendered without a logged-in user
+  if (!user) return null; 
 
   return (
     <DropdownMenu>
