@@ -7,19 +7,17 @@ import SignUpButton from "./SignUpButton";
 import { SignInButton } from "./SignInButton";
 import { toast } from "@/hooks/use-toast";
 import { useAuthService } from "@/hooks/use-authService";
-import { useUserService } from "@/hooks/use-userService";
 import useAuthStore from "@/stores/authStore";
 import UserButton from "./UserButton";
 import { Search } from "lucide-react";
-import { SheetDemo } from "./NavSideBar";
+import { NavSideBar } from "./NavSideBar";
 
 function NonDashBoardNavbar() {
-  const { user, setUser } = useAuthStore();
+  const { user, getProfile } = useAuthStore();
 
   const { theme, toggleTheme } = useTheme();
 
   const authService = useAuthService();
-  const userService = useUserService();
 
   return (
     <div className="w-full p-4 bg-red-400">
@@ -34,10 +32,8 @@ function NonDashBoardNavbar() {
                 if (!authService) return false;
                 try {
                   await authService.signIn(data);
-                  if (userService) {
-                    const user = await userService.profile();
-                    setUser(user);
-                  }
+                  getProfile();
+
                   return true;
                 } catch (error) {
                   toast({
@@ -68,7 +64,7 @@ function NonDashBoardNavbar() {
       {/* Mobile  */}
 
       <div className=" justify-between items-center flex sm:hidden">
-        <SheetDemo />
+        <NavSideBar />
 
         <h3 className="text-white text-xl">Logo</h3>
 

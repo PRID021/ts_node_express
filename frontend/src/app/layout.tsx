@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/providers/ThemeContext";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import AppInitializer from "@/components/custom/AppInitializer";
+import { LoginDialog } from "@/components/custom/LoginDialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
             <AppInitializer />
             {children}
             <Toaster />
+            <LoginDialog />
           </ReactQueryProvider>
         </ThemeProvider>
       </body>
