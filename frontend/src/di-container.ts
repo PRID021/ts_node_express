@@ -12,6 +12,8 @@ import { StorageRepositoryImpl } from "./infrastructure/api/LocalStorageReposito
 import { UserRepository } from "./domain/repositories/UserRepository";
 import { UserRepositoryImpl } from "./infrastructure/api/UserRepositoryImpl";
 import { UserService, UserServiceImpl } from "./services/userService";
+import { FeaturingRepository } from "./domain/repositories/FeaturingRepository";
+import { FeaturingRepositoryImpl } from "./infrastructure/api/FeaturingRepositoryImpl";
 
 const container = new Container();
 /// DI REPO
@@ -24,6 +26,9 @@ container
   .bind<StorageRepository>(TYPES.StorageRepository)
   .to(StorageRepositoryImpl);
 
+container
+  .bind<FeaturingRepository>(TYPES.FeaturingRepository)
+  .to(FeaturingRepositoryImpl);
 /// DI Service
 container.bind<AuthService>(TYPES.AuthService).to(AuthServiceImpl);
 container.bind<UserService>(TYPES.UserService).to(UserServiceImpl);

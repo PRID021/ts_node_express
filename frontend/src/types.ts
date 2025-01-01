@@ -7,6 +7,7 @@ export const TYPES = {
   AuthService: Symbol.for("AuthService"),
   StorageRepository: Symbol.for("StorageRepository"),
   UserService: Symbol.for("UserService"),
+  FeaturingRepository: Symbol.for("FeaturingRepository"),
 };
 
 export interface TokenRetrieve {

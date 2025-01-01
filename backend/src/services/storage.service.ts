@@ -42,10 +42,7 @@ export const saveFile = async (file: Express.Multer.File): Promise<string> => {
     }
   } else {
     // Save to local storage
-    const filePath = path.join(
-      localStoragePath,
-      `${Date.now()}-${file.originalname}`
-    );
+    const filePath = path.join(localStoragePath, `${file.originalname}`);
 
     // Ensure the local uploads directory exists
     if (!fs.existsSync(localStoragePath)) {

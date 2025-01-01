@@ -11,15 +11,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        gradient: {
-          start: "var(--gradient-start)",
-          middle: "var(--gradient-middle)",
-          end: "var(--gradient-end)",
-        },
-        button: {
-          DEFAULT: "var(--button-hover)",
-          hover: "var(--button-hover)",
-        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

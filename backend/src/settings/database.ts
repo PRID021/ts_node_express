@@ -1,6 +1,7 @@
 import { createTables } from "@models/index";
 import { appConfigs } from "@settings/config";
 import { Sequelize } from "sequelize";
+import { seedDatabase } from "./seed";
 
 export const sequelize = new Sequelize({
   dialect: "mysql",
@@ -22,6 +23,8 @@ export const syncDatabase = async () => {
       await sequelize.sync();
       console.log("Database synchronized.");
     }
+
+    await seedDatabase(sequelize);
     console.log("All models synchronized!");
   } catch (error) {
     console.error("Failed to synchronize the database:", error);

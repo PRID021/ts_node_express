@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,6 +15,9 @@ import { useDialogStore } from "./LoginDialog";
 import { useState } from "react";
 import useAuthStore from "@/stores/authStore";
 import Image from "next/image";
+import { format } from "date-fns";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export function NavSideBar() {
   const user = useAuthStore((state) => state.user);
@@ -33,10 +38,13 @@ export function NavSideBar() {
             setIsOpen(true);
           }}
         >
-          <Menu className="w-6 h-6 text-gray-800" />
+          <Menu className="w-6 h-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent
+        side="left"
+        className="h-full flex flex-col justify-between m-0 p-0 gap-4"
+      >
         <VisuallyHidden>
           <SheetHeader>
             <SheetTitle>Edit profile</SheetTitle>
@@ -46,8 +54,9 @@ export function NavSideBar() {
             </SheetDescription>
           </SheetHeader>
         </VisuallyHidden>
-        {!user ? (
-          <div className="grid gap-4 py-4">
+
+        <div className="flex flex-col p-4 ">
+          {!user ? (
             <Button
               type="submit"
               variant="ghost"
@@ -56,11 +65,8 @@ export function NavSideBar() {
             >
               Log In
             </Button>
-          </div>
-        ) : (
-          <div className="grid gap-4 py-4">
+          ) : (
             <div className="flex items-center space-x-4">
-              {/* Example: Show user's avatar */}
               <Image
                 src={user.avatar || "/default-avatar.png"}
                 alt="User Avatar"
@@ -70,11 +76,50 @@ export function NavSideBar() {
               />
               <div>
                 <h3 className="font-semibold">{user.user_name}</h3>
-                <p className="text-sm text-gray-500">{user.birth_of_day}</p>
+                <p className="text-sm ">
+                  {format(new Date(user.birth_of_day), "dd/MM/yyyy")}
+                </p>
               </div>
             </div>
+          )}
+        </div>
+        <div className="border-t border-gray-300 w-full" />
+
+        {/* Navigation Links */}
+        {user && (
+          <div className="flex flex-col flex-grow px-4">
+            {["Courses", "Billing", "Profile"].map((link) => (
+              <motion.div
+                key={link}
+                className="relative py-2"
+                whileHover="hover" // Trigger hover state
+                initial="rest" // Initial state
+                animate="rest" // Animate back to rest
+              >
+                <Link
+                  href={`/student/${link.toLowerCase()}`}
+                  className="text-lg  font-medium"
+                >
+                  {link}
+                </Link>
+                <motion.div
+                  className="absolute bottom-0 left-0 h-0.5 bg-secondary-foreground"
+                  variants={{
+                    rest: { width: 0, opacity: 0 }, // Hidden by default
+                    hover: { width: "100%", opacity: 1 }, // Expand underline on hover
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
+            ))}
           </div>
         )}
+        <div className="border-t border-gray-300 w-full" />
+        <div className="mx-4 pb-4">
+          <Button className="self-start w-full">
+            <h3>SignOut</h3>
+          </Button>
+        </div>
       </SheetContent>
     </Sheet>
   );

@@ -40,15 +40,6 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
 
-    --gradient-start: #f3e8ff; /* Light lavender/soft white with a purple tint */
-    --gradient-middle: #8b5cf6; /* Rich, medium dark purple */
-    --gradient-end: #6b21a8; /* Deep purple */
-    --button-hover: #9a4de2;
-    
-    
-    
-    
-
   }
   .dark {
     --background: 0 0% 7%;
@@ -75,12 +66,6 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-
-    --gradient-start: #121212;
-    --gradient-middle: #2A2A2A;
-    --gradient-end: #3E3E3E;
-    --button-hover: #4a4a4a;
-    
   }
 }
 

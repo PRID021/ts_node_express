@@ -20,10 +20,10 @@ function NonDashBoardNavbar() {
   const authService = useAuthService();
 
   return (
-    <div className="w-full p-4 bg-red-400">
+    <div className="w-full p-4 bg-secondary shadow-lg overflow-hidden">
       {/* Tablet and higher */}
       <div className=" justify-between items-center hidden sm:flex">
-        <div className="text-white text-xl">Logo</div>
+        <div className=" text-xl">Logo</div>
 
         <div className="flex items-center space-x-4">
           {!user && (
@@ -53,10 +53,7 @@ function NonDashBoardNavbar() {
 
           {user && <UserButton />}
 
-          <Button
-            onClick={toggleTheme}
-            className="bg-card text-foreground hover:bg-button-hover"
-          >
+          <Button onClick={toggleTheme} className="bg-card text-foreground ">
             {theme === "light" ? "🌙" : "🌞"}
           </Button>
         </div>
@@ -71,7 +68,7 @@ function NonDashBoardNavbar() {
         <Button
           variant="ghost"
           aria-label="Search"
-          className="flex items-center p-2 text-gray-500 hover:text-white hover:bg-gray-700 rounded"
+          className="flex items-center p-2 rounded"
         >
           <Search className="w-5 h-5" />
           <span className="ml-2 hidden sm:block">Search</span>

@@ -5,9 +5,14 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "avatar.iran.liara.run",
-        pathname: "/**", // Allow any path within this domain
+        protocol: "https", // Allow https protocol
+        hostname: "**", // Allow any hostname
+        pathname: "/**", // Allow any path within any hostname
+      },
+      {
+        protocol: "http", // Allow http protocol
+        hostname: "**", // Allow any hostname
+        pathname: "/**", // Allow any path within any hostname
       },
     ],
   },
