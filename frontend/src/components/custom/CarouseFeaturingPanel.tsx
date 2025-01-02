@@ -58,9 +58,9 @@ const CarouselSlide = ({
           <Image
             src={mobileMedia}
             alt={imageAlt}
-            layout="responsive"
             width={96}
             height={52}
+            layout="responsive"
             className="object-cover"
           />
         </CardContent>
@@ -73,7 +73,7 @@ const CarouselSlide = ({
   </CarouselItem>
 );
 
-export function CarousePanel() {
+export function CarouseFeaturingPanel() {
   const featuringRepo = useFeaturingRepo();
   const [slides, setSlides] = useState<Featuring[]>([]);
 

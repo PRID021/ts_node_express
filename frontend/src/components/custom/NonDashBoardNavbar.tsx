@@ -20,11 +20,9 @@ function NonDashBoardNavbar() {
   const authService = useAuthService();
 
   return (
-    <div className="w-full p-4 bg-secondary shadow-lg overflow-hidden">
-      {/* Tablet and higher */}
+    <div className="w-full p-4 bg-secondary shadow-lg overflow-hidden ">
       <div className=" justify-between items-center hidden sm:flex">
         <div className=" text-xl">Logo</div>
-
         <div className="flex items-center space-x-4">
           {!user && (
             <SignInButton
