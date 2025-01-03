@@ -11,6 +11,7 @@ import useAuthStore from "@/stores/authStore";
 import UserButton from "./UserButton";
 import { Search } from "lucide-react";
 import { NavSideBar } from "./NavSideBar";
+import Image from "next/image";
 
 function NonDashBoardNavbar() {
   const { user, getProfile } = useAuthStore();
@@ -22,7 +23,16 @@ function NonDashBoardNavbar() {
   return (
     <div className="w-full p-4 bg-secondary shadow-lg overflow-hidden ">
       <div className=" justify-between items-center hidden sm:flex">
-        <div className=" text-xl">Logo</div>
+        <div className=" text-xl">
+          <Image
+            src="/logo.svg"
+            alt="uLogo"
+            className="h-6"
+            width={40}
+            height={40}
+          />
+        </div>
+
         <div className="flex items-center space-x-4">
           {!user && (
             <SignInButton

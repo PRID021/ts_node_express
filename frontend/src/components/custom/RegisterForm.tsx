@@ -64,10 +64,10 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
   const { errors } = form.formState;
 
   return (
-    <div className="p-8">
-      <h2 className="text-3xl font-bold mb-6 text-center bg-clip-text text-card-foreground">
+    <div className="p-6">
+      <h1 className="text-xl font-bold text-center bg-clip-text text-card-foreground">
         Create Account
-      </h2>
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <FormField

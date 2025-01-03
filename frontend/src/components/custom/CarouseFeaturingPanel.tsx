@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useFeaturingRepo } from "@/hooks/user-landingRepo";
 import { useEffect, useState } from "react";
 import { Featuring } from "@/domain/models/Featuring";
+import Autoplay from "embla-carousel-autoplay";
 
 type CarouselSlideProps = {
   desktopMedia: string;
@@ -76,6 +77,9 @@ const CarouselSlide = ({
 export function CarouseFeaturingPanel() {
   const featuringRepo = useFeaturingRepo();
   const [slides, setSlides] = useState<Featuring[]>([]);
+  const plugin = React.useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  );
 
   useEffect(() => {
     const fetchFeaturingFeature = async () => {
@@ -88,8 +92,8 @@ export function CarouseFeaturingPanel() {
   }, [featuringRepo]);
 
   return (
-    <div className="relative w-full">
-      <Carousel className="w-full">
+    <div className="relative w-full ">
+      <Carousel className="w-full" plugins={[plugin.current]}>
         <CarouselContent>
           {slides.map((slide, index) => (
             <CarouselSlide key={index} {...slide} />

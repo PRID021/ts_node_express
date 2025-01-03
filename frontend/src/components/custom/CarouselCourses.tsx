@@ -31,9 +31,9 @@ export function CarouselCourses(props: CarouselCoursesProps) {
         {courses.map((course) => (
           <CarouselItem
             key={course.id}
-            className="md:basis-1/2 lg:basis-1/4 flex-shrink-0 pl-4" /* Responsive sizing */
+            className="basis-1/2  md:basis-1/3 lg:basis-1/4 flex-shrink-0 pl-4" /* Responsive sizing */
           >
-            <Card className="h-full flex flex-col">
+            <Card className="max-w-[300px]  h-[300px] flex flex-col">
               {" "}
               {/* Equal height */}
               <CardContent className="p-0 flex flex-col h-full">

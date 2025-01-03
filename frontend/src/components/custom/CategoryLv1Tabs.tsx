@@ -35,14 +35,6 @@ const CategoryLv1Tabs: React.FC = () => {
                 key={categoryLv1.id}
                 categoriesLv2={categoryLv1.subCategory}
               />
-              // <div key={category.id}>
-              //   <h3 className="text-lg font-semibold mb-4">
-              //     {category.label} Courses
-              //   </h3>
-              //   <p className="text-gray-600 mb-6">{category.label}</p>
-
-              //   <CarouselCoursesSize courses={tab.courses} />
-              // </div>
             )
         )}
       </div>
