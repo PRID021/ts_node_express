@@ -65,6 +65,15 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
       };
       return res.status(401).json(errorResponse);
     }
+
+    if (!user.is_verified) {
+      errorResponse = {
+        statusCode: appErrorCodes.unauthorized.notVerified,
+        message: appErrorMessages.unauthorized.notVerified,
+      };
+      return res.status(401).json(errorResponse);
+    }
+
     const userToken: UserToken = await createUserToken(user);
     setUserTokenCookie(res, userToken);
 

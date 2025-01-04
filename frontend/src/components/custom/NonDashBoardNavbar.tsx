@@ -12,6 +12,7 @@ import UserButton from "./UserButton";
 import { Search } from "lucide-react";
 import { NavSideBar } from "./NavSideBar";
 import Image from "next/image";
+import { AxiosError } from "axios";
 
 function NonDashBoardNavbar() {
   const { user, getProfile } = useAuthStore();
@@ -48,8 +49,8 @@ function NonDashBoardNavbar() {
                     variant: "destructive",
                     title: "SignIn Failed",
                     description:
-                      error instanceof Error
-                        ? error.message
+                      error instanceof AxiosError
+                        ? error.response?.data.message
                         : "An unexpected error occurred.",
                   });
                   return false;

@@ -77,7 +77,7 @@ function SignUpButton() {
                   title: "Registration Failed",
                   description:
                     error instanceof AxiosError
-                      ? error.response?.data?.message || error.message
+                      ? error.message
                       : "An unexpected error occurred. Please try again later.",
                 });
               }
@@ -110,7 +110,7 @@ function SignUpButton() {
                   title: "Verification Failed",
                   description:
                     error instanceof AxiosError
-                      ? error.response?.data?.message || error.message
+                      ? error.message
                       : "An unexpected error occurred. Please try again later.",
                 });
               }

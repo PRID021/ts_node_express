@@ -20,6 +20,8 @@ interface NestedErrorDetailMessages {
 // Unauthorized Error Details
 interface UnauthorizedErrorCodes extends ErrorDetailCodes {
   invalid: number;
+
+  notVerified: number;
   token: {
     requireRefresh: number;
   };
@@ -31,12 +33,13 @@ interface UnauthorizedErrorCodes extends ErrorDetailCodes {
     otp: { invalid: number; expired: number };
   };
   verify: {
-    tokenInvalid: number
+    tokenInvalid: number;
   };
 }
 
 interface UnauthorizedErrorMessages extends ErrorDetailMessages {
   invalid: string;
+  notVerified: string;
   token: {
     requireRefresh: string;
   };
@@ -48,7 +51,7 @@ interface UnauthorizedErrorMessages extends ErrorDetailMessages {
     otp: { invalid: string; expired: string };
   };
   verify: {
-    tokenInvalid: string
+    tokenInvalid: string;
   };
 }
 

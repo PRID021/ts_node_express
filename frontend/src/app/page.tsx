@@ -13,10 +13,8 @@ export default function Home() {
       <main className="w-screen flex  flex-col justify-center items-center h-auto overflow-hidden max-w-7xl mx-auto px-4">
         <CarouseFeaturingPanel />
         <CategoryModule />
-
         <CourseTarget />
         <UserArchivesPanel />
-
         <TopTrend />
       </main>
       <Footer />

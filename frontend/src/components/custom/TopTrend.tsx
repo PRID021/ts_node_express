@@ -17,10 +17,10 @@ function TopTrend() {
       </div>
 
       <div className="w-full lg:w-1/3 flex flex-col justify-center px-4 lg:px-6  self-center">
-        <h1 className="text-xl font-bold mb-4 text-gray-800">
+        <h1 className="text-xl font-bold mb-4 text-foreground ">
           Top trends for the future of work
         </h1>
-        <p className="text-gray-600 leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed">
           Our 2025 Global Learning & Skills Trends Report is out now! Find out
           how to build the skills to keep pace with change.
         </p>

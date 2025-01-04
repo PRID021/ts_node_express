@@ -48,6 +48,7 @@ export class AuthServiceImpl implements AuthService {
       await this.authRepository.signIn(signInData);
       return null;
     } catch (error) {
+      console.log("51: ", error);
       throw error;
     }
   };

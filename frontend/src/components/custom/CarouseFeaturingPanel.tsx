@@ -44,10 +44,10 @@ const CarouselSlide = ({
           className="object-cover"
         />
         {/* Floating Card */}
-        <Card className="absolute top-[15%] left-[10%] p-2 m-0 rounded-none max-w-96 bg-white  shadow-lg">
+        <Card className="absolute top-[15%] left-[10%] p-2 m-0 rounded-none max-w-96 bg-card  shadow-lg">
           <CardContent className="items-center justify-center p-4">
             <h1 className="text-xl font-bold">{heading}</h1>
-            <p className="text-sm text-gray-600">{text}</p>
+            <p className="text-sm text-muted-foreground ">{text}</p>
           </CardContent>
         </Card>
       </CardContent>
@@ -68,7 +68,7 @@ const CarouselSlide = ({
       </Card>
       <div className="p-4">
         <h1 className="text-xl font-bold">{heading}</h1>
-        <p className="text-sm text-gray-600">{text}</p>
+        <p className="text-sm text-muted-foreground ">{text}</p>
       </div>
     </div>
   </CarouselItem>
@@ -100,11 +100,11 @@ export function CarouseFeaturingPanel() {
           ))}
         </CarouselContent>
         <CarouselPrevious
-          className="absolute top-1/2 left-[40px] transform -translate-y-1/2 z-10 bg-white bg-opacity-50 p-2 rounded-full shadow-md hover:bg-opacity-75"
+          className="absolute top-1/2 left-[40px] transform -translate-y-1/2 z-10 bg-card bg-opacity-50 p-2 rounded-full shadow-md hover:bg-opacity-75"
           aria-label="Previous slide"
         />
         <CarouselNext
-          className="absolute top-1/2 right-[40px] transform -translate-y-1/2 z-10 bg-white bg-opacity-50 p-2 rounded-full shadow-md hover:bg-opacity-75"
+          className="absolute top-1/2 right-[40px] transform -translate-y-1/2 z-10 bg-card  bg-opacity-50 p-2 rounded-full shadow-md hover:bg-opacity-75"
           aria-label="Next slide"
         />
       </Carousel>

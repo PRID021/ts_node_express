@@ -20,6 +20,7 @@ interface AppErrorCodes {
 export const appErrorCodes: AppErrorCodes = {
   unauthorized: {
     common: 401000,
+    notVerified: 401004,
     invalid: 401001,
     token: {
       requireRefresh: 401004,
@@ -33,7 +34,7 @@ export const appErrorCodes: AppErrorCodes = {
     },
     verify: {
       tokenInvalid: 400001,
-    }
+    },
   },
   notFound: {
     common: 404000,
@@ -57,7 +58,8 @@ export const appErrorCodes: AppErrorCodes = {
 export const appErrorMessages: AppErrorMessages = {
   unauthorized: {
     common: "Unauthorized",
-    invalid: "Auth token invalid or expired",
+    invalid: "Auth token invalid or expired.",
+    notVerified: "Account have not verified.",
     login: {
       blank: "Username and password required",
       token: { failure: "Cannot generate token" },
@@ -71,7 +73,7 @@ export const appErrorMessages: AppErrorMessages = {
 
     verify: {
       tokenInvalid: "Authentication code invalid or expired.",
-    }
+    },
   },
   notFound: {
     common: "Resource not found",
@@ -81,7 +83,7 @@ export const appErrorMessages: AppErrorMessages = {
   badRequest: {
     common: "Bad request",
     paramIsNaN: "Parameter is not a number",
-    userExits: "Username already exits."
+    userExits: "Username already exits.",
   },
   internalServerError: {
     common: "Internal server error",

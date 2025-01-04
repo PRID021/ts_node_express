@@ -7,7 +7,7 @@ function CategoryModule() {
       <h1 className="text-xl font-bold pt-4">
         All the skills you need in one place
       </h1>
-      <p className="text-gray-600 mb-6">
+      <p className="text-muted-foreground mb-6">
         From critical skills to technical topics, Udemy supports your
         professional development.
       </p>
