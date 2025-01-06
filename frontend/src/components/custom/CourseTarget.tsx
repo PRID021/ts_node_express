@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import TrainingTarget, { TrainingTargetItem } from "./TrainingTarget";
 import Image from "next/image";
+import { useState } from "react";
+import { Card, CardContent } from "../ui/card";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import TrainingTarget, { TrainingTargetItem } from "./TrainingTarget";
 
 const Items: TrainingTargetItem[] = [
   {
@@ -39,14 +41,14 @@ function CourseTarget() {
   const [focusedItem, setFocusedItem] = useState<TrainingTargetItem>(Items[0]);
 
   return (
-    <div className="w-full flex flex-col justify-center items-start py-4 gap-4">
+    <div className="w-full flex flex-col justify-center items-start gap-4">
       <h1 className="text-xl font-bold self-start text-start">
         Learning focused on your goals
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-        {/* Left Column: List of Training Targets */}
-        <div className="space-y-4">
+      {/* 768px and more */}
+      <div className=" hidden md:flex flex-row gap-4 items-center">
+        <div className="space-y-4 w-1/2">
           {Items.map((item) => (
             <TrainingTarget
               key={item.title}
@@ -56,9 +58,7 @@ function CourseTarget() {
             />
           ))}
         </div>
-
-        {/* Right Column: Focused Image */}
-        <div className="relative w-full">
+        <div className="relative w-1/2 ">
           <Image
             src={focusedItem.bigImg}
             alt={focusedItem.title}
@@ -70,6 +70,42 @@ function CourseTarget() {
           />
         </div>
       </div>
+
+      {/* less than 768px */}
+
+      <Carousel
+        opts={{
+          align: "center",
+        }}
+        className=" md:hidden w-full"
+      >
+        <CarouselContent>
+          {Items.map((item) => (
+            <CarouselItem key={item.title} className="w-full">
+              <Card>
+                <CardContent className=" flex flex-col w-full">
+                  <Image
+                    src={item.bigImg}
+                    alt={item.title}
+                    width={240}
+                    height={135}
+                    layout="responsive"
+                    className="object-cover rounded-t-xl w-full"
+                  />
+                  <div className="w-full">
+                    <h4 className="text-sm font-semibold my-2 ">
+                      {item.title}
+                    </h4>
+                    <p className="text-muted-foreground text-sm">
+                      {item.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 }

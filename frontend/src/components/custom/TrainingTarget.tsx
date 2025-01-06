@@ -1,7 +1,6 @@
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export type TrainingTargetItem = {
   illusUrl: string;

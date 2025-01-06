@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -26,16 +24,12 @@ export function CarouselCourses(props: CarouselCoursesProps) {
       className="w-full"
     >
       <CarouselContent className="flex gap-2 -ml-4">
-        {" "}
-        {/* Horizontal gap */}
         {courses.map((course) => (
           <CarouselItem
             key={course.id}
-            className="basis-1/2  md:basis-1/3 lg:basis-1/4 flex-shrink-0 pl-4" /* Responsive sizing */
+            className="basis-1/2  md:basis-1/3 lg:basis-1/4 flex-shrink-0 pl-4 min-w-[280px]"
           >
-            <Card className="max-w-[300px]  h-[320px] flex flex-col">
-              {" "}
-              {/* Equal height */}
+            <Card className="max-w-[300px]  h-[350px] flex flex-col">
               <CardContent className="p-0 flex flex-col h-full">
                 <Image
                   src={course.courseImg}
