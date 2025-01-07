@@ -9,26 +9,24 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "../ui/card";
 import { Skeleton } from "@/components/ui/skeleton"; // Import the Skeleton component
+import { Card, CardContent } from "../ui/card";
 
-import Image from "next/image";
-import { useFeaturingRepo } from "@/hooks/user-landingRepo";
-import { useEffect, useState } from "react";
-import { Featuring } from "@/domain/models/Featuring";
+import { useFeaturingProvider } from "@/hooks/use-featuringProvider";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 
 type CarouselSlideProps = {
-  desktopMedia: string;
-  mobileMedia: string;
+  desktop_media: string;
+  mobile_media: string;
   imageAlt: string;
   heading: string;
   text: string;
 };
 
 const CarouselSlide = ({
-  desktopMedia,
-  mobileMedia,
+  desktop_media,
+  mobile_media,
   imageAlt,
   heading,
   text,
@@ -37,7 +35,7 @@ const CarouselSlide = ({
     <Card className="p-0 m-0 hidden sm:block rounded-none">
       <CardContent className="relative items-center justify-center p-0 m-0">
         <Image
-          src={desktopMedia}
+          src={desktop_media}
           alt={imageAlt}
           layout="responsive"
           width={134}
@@ -58,7 +56,7 @@ const CarouselSlide = ({
       <Card className="p-0 m-0 rounded-none">
         <CardContent className="flex items-center justify-center p-0 m-0">
           <Image
-            src={mobileMedia}
+            src={mobile_media}
             alt={imageAlt}
             width={96}
             height={52}
@@ -86,23 +84,14 @@ const CarouselSkeleton = () => (
 );
 
 export function CarouseFeaturingPanel() {
-  const featuringRepo = useFeaturingRepo();
-  const [slides, setSlides] = useState<Featuring[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
 
-  useEffect(() => {
-    const fetchFeaturingFeature = async () => {
-      const serverResponse = await featuringRepo?.getFeaturings();
-      if (serverResponse) {
-        setSlides(serverResponse.data);
-      }
-      setLoading(false); // Set loading to false once data is fetched
-    };
-    fetchFeaturingFeature();
-  }, [featuringRepo]);
+  const [state, stateModifier] = useFeaturingProvider();
+
+  const loading = state.isLoading;
+  const slides = state.data ?? [];
 
   return (
     <div className="relative w-full">

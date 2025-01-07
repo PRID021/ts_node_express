@@ -1,10 +1,10 @@
-import UserArchivesPanel from "@/components/custom/UserArchivesPanel";
 import { CarouseFeaturingPanel } from "@/components/custom/CarouseFeaturingPanel";
 import CategoryModule from "@/components/custom/CategoryModule";
 import CourseTarget from "@/components/custom/CourseTarget";
 import Footer from "@/components/custom/Footer";
 import NonDashBoardNavbar from "@/components/custom/NonDashBoardNavbar";
 import TopTrend from "@/components/custom/TopTrend";
+import UserArchivesPanel from "@/components/custom/UserArchivesPanel";
 
 export default function Home() {
   return (

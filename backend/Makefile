@@ -13,11 +13,11 @@ build:
 
 # Run the Docker container using the 'latest' tag
 up:
-	$(DOCKER_COMPOSE) up $(DOCKER_RUN_ARGS)
+	$(DOCKER_COMPOSE) up 
 
 # Bring down the container and remove the image tagged with 'latest'
 down:
-	$(DOCKER_COMPOSE) $(DOCKER_DOWN_ARGS) down --rmi local --volumes
+	$(DOCKER_COMPOSE) $(DOCKER_DOWN_ARGS) --rmi local --volumes
 
 restart: down up
 

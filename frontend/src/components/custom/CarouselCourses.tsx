@@ -6,8 +6,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Course } from "@/domain/models/CourseCategory";
 import Image from "next/image";
-import { Course } from "./fake";
 
 type CarouselCoursesProps = {
   courses: Course[];
@@ -32,7 +32,7 @@ export function CarouselCourses(props: CarouselCoursesProps) {
             <Card className="max-w-[300px]  h-[350px] flex flex-col">
               <CardContent className="p-0 flex flex-col h-full">
                 <Image
-                  src={course.courseImg}
+                  src={course.course_img}
                   alt={course.title}
                   width={240}
                   height={135}
@@ -44,11 +44,11 @@ export function CarouselCourses(props: CarouselCoursesProps) {
                     {course.title}
                   </h4>
                   <p className="text-muted-foreground text-sm">
-                    {course.teacherName}
+                    {course.teacher_name}
                   </p>
                   <p className="text-muted-foreground text-sm mt-2">
-                    ⭐ {course.courseStar} (
-                    {course.studentNumber.toLocaleString()} students)
+                    ⭐ {course.course_star} (
+                    {course.student_number.toLocaleString()} students)
                   </p>
                   <p className="mt-2 font-semibold text-blue-500">
                     ₫{course.price.toLocaleString()}

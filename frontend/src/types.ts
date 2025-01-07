@@ -4,6 +4,7 @@ export const TYPES = {
   AuthRepository: Symbol.for("AuthRepository"),
   UserRepository: Symbol.for("UserRepository"),
   AxiosInstance: Symbol.for("AxiosInstance"),
+  CourseModuleRepository: Symbol.for("CourseModuleRepository"),
   AuthService: Symbol.for("AuthService"),
   StorageRepository: Symbol.for("StorageRepository"),
   UserService: Symbol.for("UserService"),

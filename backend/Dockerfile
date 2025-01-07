@@ -10,5 +10,5 @@ COPY . .
 
 EXPOSE 3000
 
-# Run the application
-CMD ["yarn", "dev"]
+# Wait for 10 seconds before running the application
+CMD ["sh", "-c", "sleep 10 && yarn dev"]

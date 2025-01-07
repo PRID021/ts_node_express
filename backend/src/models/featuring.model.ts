@@ -3,8 +3,8 @@ import { Media } from "./media.model";
 
 export class Featuring extends Model {
   public id!: number; // Primary key
-  public desktopId!: number; // Foreign key for desktop media
-  public mobileId!: number; // Foreign key for mobile media
+  public desktop_id!: number; // Foreign key for desktop media
+  public mobile_id!: number; // Foreign key for mobile media
   public imageAlt!: string; // Alt text for the image
   public heading!: string; // Heading text
   public text!: string; // Description text
@@ -21,8 +21,8 @@ export class Featuring extends Model {
       imageAlt: values.imageAlt,
       heading: values.heading,
       text: values.text,
-      desktopMedia: values.desktopMedia?.source, // Only return source for desktop media
-      mobileMedia: values.mobileMedia?.source, // Only return source for mobile media
+      desktop_media: values.desktop_media?.source, // Only return source for desktop media
+      mobile_media: values.mobile_media?.source, // Only return source for mobile media
     };
   }
 }
@@ -35,7 +35,7 @@ export const initFeaturingModel = (sequelize: Sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      desktopId: {
+      desktop_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
@@ -45,7 +45,7 @@ export const initFeaturingModel = (sequelize: Sequelize) => {
         onDelete: "CASCADE", // Deletes Featuring entry if the referenced Media is deleted
         onUpdate: "CASCADE",
       },
-      mobileId: {
+      mobile_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {

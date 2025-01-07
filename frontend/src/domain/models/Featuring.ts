@@ -3,6 +3,6 @@ export interface Featuring {
   imageAlt: string;
   heading: string;
   text: string;
-  desktopMedia: string;
-  mobileMedia: string;
+  desktop_media: string;
+  mobile_media: string;
 }

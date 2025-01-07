@@ -11,8 +11,12 @@ export type RegisterRequest = Omit<
 export type SignInRequest = { user_name: string; password: string };
 
 export interface AuthRepository {
-  register: (userData: RegisterRequest) => Promise<ServerResponse<User>>;
-  verify: (verifyData: VerifyRequest) => Promise<ServerResponse<undefined>>;
-  signIn: (signInData: SignInRequest) => Promise<ServerResponse<undefined>>;
-  logout: () => Promise<ServerResponse<undefined>>;
+  register: (userData: RegisterRequest) => Promise<ServerResponse<User, Error>>;
+  verify: (
+    verifyData: VerifyRequest
+  ) => Promise<ServerResponse<undefined, Error>>;
+  signIn: (
+    signInData: SignInRequest
+  ) => Promise<ServerResponse<undefined, Error>>;
+  logout: () => Promise<ServerResponse<undefined, Error>>;
 }
