@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES6", // Target ECMAScript 6 or later
-    "module": "ESNext", // Use ES6 module system (for import/export)
-    "moduleResolution": "node", // Resolve modules in a Node.js-like manner
-    "outDir": "./dist", // Output directory for compiled JS files
-    "rootDir": "./src", // Input directory for TS files
-    "esModuleInterop": true, // Enable default import interoperability
-    "strict": true, // Enable strict type-checking
-    "skipLibCheck": true, // Skip type-checking of declaration files (optional)
-    "forceConsistentCasingInFileNames": true, // Ensure consistent file name casing
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
       "@controllers/*": ["src/controllers/*"],
@@ -25,11 +26,9 @@
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "tsc-alias": {
-    "resolveFullPaths": true,
-    "verbose": false
+  "ts-node": {
+    "esm": true
   },
-  "outDir": "./dist",
-  "include": ["src/**/*.ts", "posts/**/*.md"], // Include all .ts files in the src folder
-  "exclude": ["node_modules"] // Exclude node_modules folder
+  "include": ["src/**/*.ts", "posts/**/*.md"],
+  "exclude": ["node_modules"]
 }
