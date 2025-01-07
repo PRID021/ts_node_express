@@ -1,6 +1,6 @@
-import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import express from "express";
 
 import { authMiddleware } from "@middlewares/auth_middleware";
 import { loggerMiddleware } from "@middlewares/logger_middleware";
@@ -12,9 +12,6 @@ import { appConfigs } from "@settings/config";
 import { syncDatabase } from "@settings/database";
 import { appDir } from "@utils/pathUtils";
 import path from "path";
-
-
-
 
 const app = express();
 

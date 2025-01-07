@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "start": "node -r dotenv/config ./dist/app.js",
-    "dev": "tsx -r dotenv/config  --watch src/app.ts"
+    "dev": "tsx -r dotenv/config  --watch  src/app.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.717.0",

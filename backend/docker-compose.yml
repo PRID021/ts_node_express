@@ -40,6 +40,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_HOST=redis # New environment variable for Redis
       - REDIS_PORT=6379 # Redis default port
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - .:/app
       - /app/node_modules
