@@ -77,13 +77,13 @@ function CourseTarget() {
         opts={{
           align: "center",
         }}
-        className=" md:hidden w-full"
+        className=" md:hidden w-full "
       >
-        <CarouselContent>
+        <CarouselContent className="flex ">
           {Items.map((item) => (
-            <CarouselItem key={item.title} className="w-full">
-              <Card>
-                <CardContent className=" flex flex-col w-full">
+            <CarouselItem key={item.title} className="w-full ">
+              <Card className="h-full" style={{ width: "calc(100vw - 32px)" }}>
+                <CardContent className="flex flex-col w-screen h-full">
                   <Image
                     src={item.bigImg}
                     alt={item.title}
@@ -93,9 +93,7 @@ function CourseTarget() {
                     className="object-cover rounded-t-xl w-full"
                   />
                   <div className="w-full">
-                    <h4 className="text-sm font-semibold my-2 ">
-                      {item.title}
-                    </h4>
+                    <h4 className="text-sm font-semibold my-2">{item.title}</h4>
                     <p className="text-muted-foreground text-sm">
                       {item.description}
                     </p>
