@@ -36,7 +36,7 @@ const CategoryLv1Tabs: React.FC = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="mt-4 p-4  border border-border rounded-md">
+      <div className="border-t border-b border-border">
         {categories.map(
           (category) =>
             (activeCategoryId ?? categories[0].id) === category.id && (

@@ -8,9 +8,9 @@ import UserArchivesPanel from "@/components/custom/UserArchivesPanel";
 
 export default function Home() {
   return (
-    <div className="w-screen min-h-screen flex flex-col bg-background  ">
+    <div className="w-[calc(100vw-16px)] min-h-screen flex flex-col bg-background  ">
       <NonDashBoardNavbar />
-      <main className="w-screen flex  flex-col justify-center items-center h-auto overflow-hidden max-w-7xl mx-auto px-4">
+      <main className="w-full flex  flex-col justify-center items-center h-auto overflow-hidden max-w-7xl mx-auto px-4">
         <CarouseFeaturingPanel />
         <CategoryModule />
         <CourseTarget />
