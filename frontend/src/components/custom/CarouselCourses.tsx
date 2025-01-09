@@ -21,28 +21,28 @@ export function CarouselCourses(props: CarouselCoursesProps) {
       opts={{
         align: "start",
       }}
-      className="w-full"
+      className="max-w-[calc(100vw-64px)]"
     >
-      <CarouselContent className="flex gap-2 -ml-4">
+      <CarouselContent>
         {courses.map((course) => (
           <CarouselItem
             key={course.id}
-            className="basis-1/2  md:basis-1/3 lg:basis-1/4 flex-shrink-0 pl-4 min-w-[280px]"
+            className=" sm:basis-1/2 md:basis-1/3 lg:basis-1/4  "
           >
-            <Card className="max-w-[300px]  h-[350px] flex flex-col">
-              <CardContent className="p-0 flex flex-col h-full">
-                <Image
-                  src={course.course_img}
-                  alt={course.title}
-                  width={240}
-                  height={135}
-                  layout="responsive"
-                  className="object-cover rounded-t-xl"
-                />
-                <div className="p-4 flex flex-col justify-between flex-grow">
-                  <h4 className="text-sm font-semibold mb-2 ">
-                    {course.title}
-                  </h4>
+            <Card className="p-0 ml-4 max-w-[calc(100vw-84px)] h-full">
+              <CardContent className="p-0 flex flex-col">
+                <div className="flex-[2] w-full">
+                  <Image
+                    src={course.course_img}
+                    alt={course.title}
+                    width={240}
+                    height={135}
+                    className="w-full h-full object-cover rounded-t-xl "
+                  />
+                </div>
+
+                <div className="flex-[1] p-4">
+                  <h4 className="text-sm font-semibold mb-2">{course.title}</h4>
                   <p className="text-muted-foreground text-sm">
                     {course.teacher_name}
                   </p>

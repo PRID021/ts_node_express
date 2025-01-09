@@ -58,15 +58,14 @@ function CourseTarget() {
             />
           ))}
         </div>
-        <div className="relative w-1/2 ">
+        <div className="relative w-1/2">
           <Image
             src={focusedItem.bigImg}
             alt={focusedItem.title}
             width={1276}
             height={1396}
-            layout="responsive"
+            className="object-cover rounded-xl"
             priority
-            className="rounded-md"
           />
         </div>
       </div>

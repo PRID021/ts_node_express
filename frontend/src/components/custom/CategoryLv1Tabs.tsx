@@ -19,7 +19,7 @@ const CategoryLv1Tabs: React.FC = () => {
   return (
     <div className="w-full mx-auto ">
       {/* Tab Buttons */}
-      <div className="flex border-b border-border">
+      <div className="flex border-b">
         {categories.map((category) => (
           <button
             key={category.id}
