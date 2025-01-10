@@ -7,6 +7,15 @@ export abstract class ServerResponse<R, F> {
   // Abstract methods for handling success and failure
   abstract whenSuccess(callback: (data: R) => void): void;
   abstract whenFail(callback: (failure: F) => void): void;
+
+  // A helper method to handle success and failure cases
+  match(arg0: { success: (data: R) => void; fail: (error: F) => void }): R | F {
+    if (this.status === "success") {
+      return arg0.success((this as unknown as SuccessResponse<R>).data) as R;
+    } else {
+      return arg0.fail((this as unknown as FailureResponse<F>).error) as F;
+    }
+  }
 }
 
 // SuccessResponse class
@@ -17,7 +26,7 @@ export class SuccessResponse<R> extends ServerResponse<R, never> {
     super(statusCode, message);
   }
 
-   whenSuccess = (callback: (data: R) => void): void => {
+  whenSuccess = (callback: (data: R) => void): void => {
     callback(this.data);
   };
 
@@ -30,7 +39,7 @@ export class SuccessResponse<R> extends ServerResponse<R, never> {
 export class FailureResponse<F> extends ServerResponse<never, F> {
   status = "failure" as const;
 
-  constructor(statusCode: number, message: string, public error: Error) {
+  constructor(statusCode: number, message: string, public error: F) {
     super(statusCode, message);
   }
 
@@ -39,6 +48,6 @@ export class FailureResponse<F> extends ServerResponse<never, F> {
   };
 
   whenFail = (callback: (failure: F) => void): void => {
-    callback(this.error as F);
+    callback(this.error);
   };
 }

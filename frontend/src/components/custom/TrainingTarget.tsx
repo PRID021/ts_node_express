@@ -1,16 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { LearningStyle } from "@/domain/models/LearningStyle";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-export type TrainingTargetItem = {
-  illusUrl: string;
-  title: string;
-  description: string;
-  bigImg: string;
-};
 
 const TrainingTarget = (props: {
-  item: TrainingTargetItem;
+  item: LearningStyle;
   focused: boolean;
   onClick: () => void;
 }) => {
@@ -35,7 +30,7 @@ const TrainingTarget = (props: {
       <CardContent className="flex items-center space-x-4 p-4 pl-6">
         <div className="flex-shrink-0">
           <Image
-            src={item.illusUrl} // Replace with your icon path
+            src={item.icon} // Replace with your icon path
             alt="Hands-on training"
             width={64}
             height={64}

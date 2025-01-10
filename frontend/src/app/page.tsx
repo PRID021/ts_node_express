@@ -1,6 +1,6 @@
 import { CarouseFeaturingPanel } from "@/components/custom/CarouseFeaturingPanel";
 import CategoryModule from "@/components/custom/CategoryModule";
-import CourseTarget from "@/components/custom/CourseTarget";
+import LearningStyles from "@/components/custom/LearningStyles";
 import Footer from "@/components/custom/Footer";
 import NonDashBoardNavbar from "@/components/custom/NonDashBoardNavbar";
 import TopTrend from "@/components/custom/TopTrend";
@@ -13,7 +13,7 @@ export default function Home() {
       <main className="w-full flex  flex-col justify-center items-center h-auto overflow-hidden max-w-7xl mx-auto px-4">
         <CarouseFeaturingPanel />
         <CategoryModule />
-        <CourseTarget />
+        <LearningStyles />
         <UserArchivesPanel />
         <TopTrend />
       </main>

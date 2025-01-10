@@ -4,6 +4,7 @@ import {
   CourseSubCategory,
 } from "@models/course_category.model";
 import { Featuring } from "@models/featuring.model";
+import { LearningStyle } from "@models/learning_style.model";
 import { Media } from "@models/media.model";
 import fs from "fs/promises";
 import path from "path";
@@ -15,7 +16,12 @@ import {
   subCategoriesDataFromCourseCategories,
 } from "./mock/courseData";
 import { featuringDataFromMediaRecord } from "./mock/featuringData";
-import { mediaData } from "./mock/mediaData";
+import { learningStylesDataFromMediaRecord } from "./mock/learningStylesData";
+import {
+  featuringsMediaData,
+  learningStyleIconsMediaData,
+  learningStyleIllusMediaData,
+} from "./mock/mediaData";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,12 +38,41 @@ export const seedDatabase = async (sequelize: Sequelize) => {
     await sequelize.sync({ force: false });
     console.log("Table schemes synced!");
 
-    const mediaRecords = await Media.bulkCreate(mediaData, { returning: true });
+    const featuringsMediaDataRecords = await Media.bulkCreate(
+      featuringsMediaData,
+      {
+        returning: true,
+      }
+    );
+
+    const learningStyleIconsMediaDataRecords = await Media.bulkCreate(
+      learningStyleIconsMediaData,
+      {
+        returning: true,
+      }
+    );
+
+    const learningStyleIllusMediaDataRecords = await Media.bulkCreate(
+      learningStyleIllusMediaData,
+      {
+        returning: true,
+      }
+    );
     console.log("Media table record seeded!");
     // Seed Featuring table with mock data
-    const featuringData = featuringDataFromMediaRecord(mediaRecords);
+    const featuringData = featuringDataFromMediaRecord(
+      featuringsMediaDataRecords
+    );
     await Featuring.bulkCreate(featuringData);
     console.log("Featuring table record seeded!");
+
+    /// Seed LearningStyle table with mock data
+    const learningStyleData = learningStylesDataFromMediaRecord(
+      learningStyleIconsMediaDataRecords,
+      learningStyleIllusMediaDataRecords
+    );
+    await LearningStyle.bulkCreate(learningStyleData);
+    console.log("LearningStyle table record seeded!");
 
     // Seed course category table with mock data
     const createdCourseCategories = await CourseCategory.bulkCreate(

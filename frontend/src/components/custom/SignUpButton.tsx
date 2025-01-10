@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useState } from "react";
 
 import {
   Dialog,
@@ -10,13 +10,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { RegisterForm } from "./RegisterForm";
-import { toast } from "@/hooks/use-toast";
-import { InputOTPForm } from "./InputOTPForm";
-import { AxiosError } from "axios";
 import { User } from "@/domain/models/User";
-import { Button } from "../ui/button";
 import { useAuthService } from "@/hooks/use-authService";
+import { toast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
+import { Button } from "../ui/button";
+import { InputOTPForm } from "./InputOTPForm";
+import { RegisterForm } from "./RegisterForm";
 
 function SignUpButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ function SignUpButton() {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="m-0 p-0"
+        className="m-0 p-0 overflow-y-scroll max-h-screen"
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >

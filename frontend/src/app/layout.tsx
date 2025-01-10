@@ -1,10 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/providers/ThemeContext";
-import { Toaster } from "@/components/ui/toaster";
-import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import AppInitializer from "@/components/custom/AppInitializer";
 import { LoginDialog } from "@/components/custom/LoginDialog";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/providers/ThemeContext";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +33,10 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <ReactQueryProvider>
-            <AppInitializer />
-            {children}
-            <Toaster />
-            <LoginDialog />
+          <AppInitializer />
+          {children}
+          <Toaster />
+          <LoginDialog />
           </ReactQueryProvider>
         </ThemeProvider>
       </body>

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -9,10 +8,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 
 interface Testimonial {
   id: number;
@@ -97,7 +97,6 @@ const UserArchivesPanel: React.FC = () => {
                         <Image
                           src={testimonial.logo}
                           alt="logo"
-                          layout="intrinsic" // Use intrinsic to preserve image aspect ratio
                           className="object-contain"
                           width={80}
                           height={40}

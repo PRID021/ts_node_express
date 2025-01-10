@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import { CarouselCourses } from "./CarouselCourses";
+import { CourseCarousel } from "./CourseCarousel";
 
 type SubCategoryTabsProps = {
   subCategories: CourseSubCategory[];
@@ -45,7 +45,7 @@ function CategoryLv2Tabs(props: SubCategoryTabsProps) {
         {subCategories.map(
           (category) =>
             category.id === activeSubCategoryId && (
-              <CarouselCourses key={category.id} courses={category.courses} />
+              <CourseCarousel key={category.id} courses={category.courses} />
             )
         )}
       </div>

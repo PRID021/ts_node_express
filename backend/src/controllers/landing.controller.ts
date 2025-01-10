@@ -4,6 +4,7 @@ import {
   CourseSubCategory,
 } from "@models/course_category.model";
 import { Featuring } from "@models/featuring.model";
+import { LearningStyle } from "@models/learning_style.model";
 import { Media } from "@models/media.model";
 import {
   common200001Response,
@@ -60,6 +61,35 @@ export const getCourseModule = async (
 
     console.log("courseCategories, ", courseCategories);
     res.status(200).json(common200001Response(courseCategories));
+  } catch (error) {
+    console.error(error);
+    res.status(999).json(unhandledErrorResponse);
+  }
+};
+
+export const getLearningStyles = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const learningStyles = await LearningStyle.findAll({
+      include: [
+        {
+          model: Media,
+          as: "icon_media",
+          attributes: ["source"],
+        },
+        {
+          model: Media,
+          as: "illus_media",
+          attributes: ["source"],
+        },
+      ],
+    });
+
+    console.log("learningStyles, ", learningStyles);
+
+    res.status(200).json(common200001Response(learningStyles));
   } catch (error) {
     console.error(error);
     res.status(999).json(unhandledErrorResponse);

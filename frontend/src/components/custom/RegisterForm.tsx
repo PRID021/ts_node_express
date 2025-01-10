@@ -1,11 +1,15 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import PasswordStrengthMeter from "@/components/custom/PasswordStrengthMeter";
 import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon, Lock, Mail, Phone, User } from "lucide-react";
+import { Calendar } from "../ui/calendar";
 import {
   Form,
   FormControl,
@@ -14,13 +18,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon, Mail, User, Lock, Phone } from "lucide-react";
-import { Calendar } from "../ui/calendar";
-import { InputWithIcon } from "./InputWithIcon";
 import { Input } from "../ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { InputWithIcon } from "./InputWithIcon";
 
 // Validation schema using Zod
 const RegisterFormSchema = z.object({
@@ -64,7 +64,7 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
   const { errors } = form.formState;
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-card-background rounded-lg shadow-lg">
       <h1 className="text-xl font-bold text-center bg-clip-text text-card-foreground">
         Create Account
       </h1>

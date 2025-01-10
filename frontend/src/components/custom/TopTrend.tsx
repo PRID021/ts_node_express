@@ -10,7 +10,6 @@ function TopTrend() {
           src="/top_trend.webp"
           alt="Top trends"
           className="object-cover rounded-md"
-          layout="responsive"
           width={1284}
           height={750}
         />

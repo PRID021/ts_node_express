@@ -6,11 +6,13 @@ import { AuthService, AuthServiceImpl } from "@/services/authService";
 import { AxiosInstance } from "axios";
 import { CourseModuleRepository } from "./domain/repositories/CourseModuleRepository";
 import { FeaturingRepository } from "./domain/repositories/FeaturingRepository";
+import { LearningStylesRepository } from "./domain/repositories/LearningStylesRepository";
 import { StorageRepository } from "./domain/repositories/StorageRepository";
 import { UserRepository } from "./domain/repositories/UserRepository";
 import { AuthRepositoryImpl } from "./infrastructure/api/AuthRepositoryImpl";
 import { CourseModuleRepositoryImpl } from "./infrastructure/api/CourseModuleRepositoryImpl";
 import { FeaturingRepositoryImpl } from "./infrastructure/api/FeaturingRepositoryImpl";
+import { LearningStylesRepositoryImpl } from "./infrastructure/api/LearningStylesRepositoryImpl";
 import { StorageRepositoryImpl } from "./infrastructure/api/LocalStorageRepositoryImpl";
 import { UserRepositoryImpl } from "./infrastructure/api/UserRepositoryImpl";
 import axiosInstance from "./infrastructure/axiosInstance";
@@ -38,5 +40,8 @@ container
 /// DI Service
 container.bind<AuthService>(TYPES.AuthService).to(AuthServiceImpl);
 container.bind<UserService>(TYPES.UserService).to(UserServiceImpl);
+container
+  .bind<LearningStylesRepository>(TYPES.LearningStylesRepository)
+  .to(LearningStylesRepositoryImpl);
 
 export { container };

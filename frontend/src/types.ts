@@ -9,6 +9,7 @@ export const TYPES = {
   StorageRepository: Symbol.for("StorageRepository"),
   UserService: Symbol.for("UserService"),
   FeaturingRepository: Symbol.for("FeaturingRepository"),
+  LearningStylesRepository: Symbol.for("LearningStylesRepository"),
 };
 
 export interface TokenRetrieve {
