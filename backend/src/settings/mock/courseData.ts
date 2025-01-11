@@ -29,10 +29,10 @@ export const subCategoriesDataFromCourseCategories = (
           title: "Mobile Development",
           description: "Develop cutting-edge mobile apps for iOS and Android.",
         },
-        {
-          title: "Data Science",
-          description: "Analyze data and build predictive models with Python.",
-        },
+        // {
+        //   title: "Data Science",
+        //   description: "Analyze data and build predictive models with Python.",
+        // },
       ],
     },
     {
@@ -61,7 +61,7 @@ export const subCategoriesDataFromCourseCategories = (
 export const coursesDataFromCourseSubCategories = (
   createdSubCategories: CourseSubCategory[]
 ) => {
-  if (createdSubCategories.length < 5) {
+  if (createdSubCategories.length < 4) {
     throw new Error("Insufficient subcategories provided.");
   }
 
@@ -100,6 +100,7 @@ export const coursesDataFromCourseSubCategories = (
         },
       ],
     },
+
     {
       subCategoryIndex: 1,
       items: [
@@ -130,20 +131,6 @@ export const coursesDataFromCourseSubCategories = (
     },
     {
       subCategoryIndex: 3,
-      items: [
-        {
-          course_img:
-            "https://img-c.udemycdn.com/course/240x135/5170404_d282_9.jpg",
-          title: "Mastering CSS & Flexbox",
-          teacher_name: "Rachel Andrew",
-          course_star: 4.6,
-          student_number: 78923,
-          price: 14.99,
-        },
-      ],
-    },
-    {
-      subCategoryIndex: 4,
       items: [
         {
           course_img:

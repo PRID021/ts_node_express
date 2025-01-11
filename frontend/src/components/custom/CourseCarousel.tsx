@@ -7,6 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Check, Dot } from "lucide-react";
+import * as HoverCardR from "@radix-ui/react-hover-card";
 
 import {
   HoverCard,
@@ -65,15 +66,22 @@ function CourseItemCard({ course }: CourseCardProps) {
           align="center"
           className="flex flex-col w-fit p-4 max-w-[320px] bg-card"
         >
-          <h1 className=" font-bold text-lg ">{course.title}</h1>
-          <div className=" text-sm text-muted-foreground flex flex-row justify-start items-center">
+          <HoverCardR.Arrow
+            className="fill-card w-[15px] h-[7px]"
+            style={{
+              stroke: "rgb(203 213 225)", // Matches border color (gray-300)
+              strokeWidth: 1, // Matches border width
+            }}
+          />
+          <h1 className="font-bold text-lg">{course.title}</h1>
+          <div className="text-sm text-muted-foreground flex flex-row justify-start items-center">
             <p>{`29.5 total hoursAll`}</p>
             <Dot className="size-4" />
             <p>{`All level`}</p>
             <Dot className="size-4" />
             <p>{`No subtitle`}</p>
           </div>
-          <p className=" text-sm mt-2">
+          <p className="text-sm mt-2">
             Become a Pro Copywriter with the Complete Copywriting and Content
             Marketing Course. Use ChatGPT. Get 70+ Pro Templates.
           </p>
@@ -92,7 +100,7 @@ function CourseItemCard({ course }: CourseCardProps) {
               </div>
             ))}
           </div>
-          <Button className="bg-background px-4 py-2 rounded-md text-foreground mt-2 font-bold shadow-md hover:shadow-lg transition-shadow">
+          <Button className="bg-accent text-accent-foreground px-4 py-2 rounded-md mt-2 font-bold shadow-md hover:shadow-lg transition-shadow">
             Buy Now
           </Button>
         </HoverCardContent>
