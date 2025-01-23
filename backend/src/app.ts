@@ -17,11 +17,12 @@ const app = express();
 
 app.use(
   cors({
-    origin: /http:\/\/localhost:\d+$/, // Matches any localhost with a port
+    origin: /.*/,
     credentials: true, // Allow cookies to be sent
   })
 );
 app.use(cookieParser());
+
 app.use("/app/uploads", express.static(path.join(appDir, "uploads")));
 
 // Create Tables

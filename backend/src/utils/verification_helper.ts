@@ -1,5 +1,5 @@
 import { UserToken } from "@app/interfaces";
-import { CookieOptions, Request, Response } from "express";
+import { CookieOptions, Response } from "express";
 
 export const generateVerificationToken = (): string => {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -11,8 +11,9 @@ export const setUserTokenCookie = (
 ): void => {
   const cookieOptions: CookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    // secure: process.env.NODE_ENV === "production",
+    secure: true,
+    sameSite: "none",
     expires: new Date(Date.now() + 60 * 60 * 1000),
     priority: "high",
     path: "/",
