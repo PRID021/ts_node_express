@@ -24,6 +24,7 @@ const container = new Container();
 container
   .bind<AxiosInstance>(TYPES.AxiosInstance)
   .toConstantValue(axiosInstance);
+  
 container.bind<AuthRepository>(TYPES.AuthRepository).to(AuthRepositoryImpl);
 container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl);
 container

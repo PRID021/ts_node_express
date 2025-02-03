@@ -1,7 +1,8 @@
 import axios from "axios";
 
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL;
+
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:3000",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
