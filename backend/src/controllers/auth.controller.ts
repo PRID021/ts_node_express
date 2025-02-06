@@ -78,17 +78,60 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
     }
 
     const userToken: UserToken = await createUserToken(user);
+    
+    setUserTokenCookie(res, userToken);
+    return res.status(200).json(common200001Response());
+  } catch (err) {
+    const response: ApiResponse = {
+      statusCode: appErrorCodes.internalServerError.common,
+      message: appErrorMessages.internalServerError.common,
+    };
+    return res.status(500).json(response);
+  }
+};
 
-    // Check if the client is a mobile device using regex
-    const userAgent = req.headers["user-agent"];
-    const isMobile = /iPhone|iPad|iPod|iOS|Android/i.test(userAgent || "");
+export const authenticate = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  const { user_name, password } = req.body;
+  let errorResponse: ApiResponse;
 
-    console.log("IsMobile", isMobile);
+  if (!user_name || !password) {
+    errorResponse = {
+      statusCode: appErrorCodes.unauthorized.login.blank,
+      message: appErrorMessages.unauthorized.login.blank,
+    };
+    return res.status(400).json(errorResponse);
+  }
 
-    if (!isMobile) {
-      setUserTokenCookie(res, userToken);
-      return res.status(200).json(common200001Response());
+  try {
+    const user = await User.findOne({ where: { user_name } });
+    if (!user) {
+      errorResponse = {
+        statusCode: appErrorCodes.unauthorized.common,
+        message: appErrorMessages.unauthorized.common,
+      };
+      return res.status(400).json(errorResponse);
     }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      errorResponse = {
+        statusCode: appErrorCodes.unauthorized.invalid,
+        message: appErrorMessages.unauthorized.invalid,
+      };
+      return res.status(401).json(errorResponse);
+    }
+
+    if (!user.is_verified) {
+      errorResponse = {
+        statusCode: appErrorCodes.unauthorized.notVerified,
+        message: appErrorMessages.unauthorized.notVerified,
+      };
+      return res.status(401).json(errorResponse);
+    }
+    const userToken: UserToken = await createUserToken(user);
     return res.status(200).json(common200001Response(userToken));
   } catch (err) {
     const response: ApiResponse = {
