@@ -15,12 +15,14 @@ import { initLearningStyleModel, LearningStyle } from "./learning_style.model";
 import { createRefreshTokenTable } from "./refresh_token.model";
 import { createUserTable } from "./user.model";
 import { createUserAddressTable } from "./user_address.model";
+import { createPostTable } from "./post.model";
 
 export const createTables = (sequelize: Sequelize) => {
   createUserTable(sequelize);
   createUserAddressTable(sequelize);
   createRefreshTokenTable(sequelize);
   createMediaTable(sequelize);
+  createPostTable(sequelize);
 
   /// Course Module
   initCourseCategory(sequelize);

@@ -1,3 +1,4 @@
+import useragent from "useragent";
 import { UserToken } from "@app/interfaces";
 import User from "@models/user.model";
 import { appErrorCodes, appErrorMessages } from "@utils/res/app_errors";
@@ -40,6 +41,7 @@ const AUTH_CODE_FORGOT_EXPIRATION = parseInt(
 export const signIn = async (req: Request, res: Response): Promise<any> => {
   const { user_name, password } = req.body;
   let errorResponse: ApiResponse;
+
   if (!user_name || !password) {
     errorResponse = {
       statusCode: appErrorCodes.unauthorized.login.blank,
@@ -47,6 +49,7 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
     };
     return res.status(400).json(errorResponse);
   }
+
   try {
     const user = await User.findOne({ where: { user_name } });
     if (!user) {
@@ -75,9 +78,18 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
     }
 
     const userToken: UserToken = await createUserToken(user);
-    setUserTokenCookie(res, userToken);
 
-    return res.status(200).json(common200001Response());
+    // Check if the client is a mobile device using regex
+    const userAgent = req.headers["user-agent"];
+    const isMobile = /iPhone|iPad|iPod|iOS|Android/i.test(userAgent || "");
+
+    console.log("IsMobile", isMobile);
+
+    if (!isMobile) {
+      setUserTokenCookie(res, userToken);
+      return res.status(200).json(common200001Response());
+    }
+    return res.status(200).json(common200001Response(userToken));
   } catch (err) {
     const response: ApiResponse = {
       statusCode: appErrorCodes.internalServerError.common,
